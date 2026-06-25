@@ -1,0 +1,9 @@
+✅ Gemini AI initialized successfully.
+GEMINI = FOUND
+Server running in development mode on port 5000
+(node:24832) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+MongoDB Connected: ac-et9roix-shard-00-00.z1yvp8k.mongodb.net
+Gold USD/oz: 4011.6 Silver USD/oz: 57.585 USD/INR: 94.652844
+Gold INR/gram: 13673 Silver INR/gram: 196
+AI tip error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.

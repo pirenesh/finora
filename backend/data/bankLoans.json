@@ -1,0 +1,452 @@
+[
+  {
+    "bankName": "SBI",
+    "loanType": "Home Loan",
+    "interestRate": "8.40% p.a. onwards",
+    "processingFee": "0.35% of loan amount (Min ₹2,000, Max ₹10,000)",
+    "maxTenureYears": 30,
+    "features": ["No pre-payment penalties", "Interest concession for women borrowers", "Overdraft facility available"],
+    "link": "https://homeloans.sbi/"
+  },
+  {
+    "bankName": "SBI",
+    "loanType": "Personal Loan",
+    "interestRate": "11.15% p.a. onwards",
+    "processingFee": "Up to 1.50% of loan amount",
+    "maxTenureYears": 6,
+    "features": ["Quick approval for salary account holders", "No hidden charges", "Low processing fees"],
+    "link": "https://sbi.co.in/web/personal-banking/loans/personal-loans"
+  },
+  {
+    "bankName": "SBI",
+    "loanType": "Education Loan",
+    "interestRate": "8.15% p.a. onwards",
+    "processingFee": "Nil for loans up to ₹20 Lakhs",
+    "maxTenureYears": 15,
+    "features": ["Repayment starts 1 year after course completion", "No collateral up to ₹7.5 Lakhs", "Covers tuition and living expenses"],
+    "link": "https://sbi.co.in/web/student-platform/student-loans"
+  },
+  {
+    "bankName": "SBI",
+    "loanType": "Gold Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "0.50% of loan amount",
+    "maxTenureYears": 3,
+    "features": ["Instant disbursal", "High per gram rate", "Flexible repayment options"],
+    "link": "https://sbi.co.in/web/personal-banking/loans/gold-loan"
+  },
+  {
+    "bankName": "SBI",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.65% p.a. onwards",
+    "processingFee": "Nil to ₹1,500 depending on offer",
+    "maxTenureYears": 7,
+    "features": ["Up to 100% on-road finance", "No advance EMI required", "Interest calculated on daily reducing balance"],
+    "link": "https://sbi.co.in/web/personal-banking/loans/auto-loans"
+  },
+  {
+    "bankName": "HDFC Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.50% p.a. onwards",
+    "processingFee": "Up to 0.50% of loan amount",
+    "maxTenureYears": 30,
+    "features": ["End-to-end digital process", "Customized repayment options", "Special rates for existing customers"],
+    "link": "https://www.hdfcbank.com/personal/borrow/popular-loans/home-loan"
+  },
+  {
+    "bankName": "HDFC Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.50% p.a. onwards",
+    "processingFee": "Up to ₹4,999",
+    "maxTenureYears": 5,
+    "features": ["Disbursal in 10 seconds for pre-approved customers", "Loans up to ₹40 Lakhs", "Minimal documentation"],
+    "link": "https://www.hdfcbank.com/personal/borrow/popular-loans/personal-loan"
+  },
+  {
+    "bankName": "HDFC Bank",
+    "loanType": "Education Loan",
+    "interestRate": "9.50% p.a. onwards",
+    "processingFee": "Up to 1% of loan amount",
+    "maxTenureYears": 15,
+    "features": ["Doorstep service", "Loans for 950+ courses across 36 countries", "Unsecured loans up to ₹45 Lakhs"],
+    "link": "https://www.hdfcbank.com/personal/borrow/popular-loans/educational-loan"
+  },
+  {
+    "bankName": "HDFC Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "9.90% p.a. onwards",
+    "processingFee": "1% of loan amount",
+    "maxTenureYears": 4,
+    "features": ["Over the counter cash disbursal", "Transparent valuation", "Zero foreclosure charges after 3 months"],
+    "link": "https://www.hdfcbank.com/personal/borrow/popular-loans/gold-loan"
+  },
+  {
+    "bankName": "HDFC Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "Up to 1% of loan amount",
+    "maxTenureYears": 7,
+    "features": ["Xpress Car Loan for immediate approval", "Flexible EMI options", "Up to 100% financing"],
+    "link": "https://www.hdfcbank.com/personal/borrow/popular-loans/new-car-loan"
+  },
+  {
+    "bankName": "ICICI Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "0.50% of loan amount",
+    "maxTenureYears": 30,
+    "features": ["Pre-approved offers online", "Doorstep assistance", "Balance transfer facility"],
+    "link": "https://www.icicibank.com/personal-banking/loans/home-loan"
+  },
+  {
+    "bankName": "ICICI Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.65% p.a. onwards",
+    "processingFee": "Up to 2.50%",
+    "maxTenureYears": 6,
+    "features": ["No restriction on end use", "Insta Personal Loan for customers", "Fixed interest rate"],
+    "link": "https://www.icicibank.com/personal-banking/loans/personal-loan"
+  },
+  {
+    "bankName": "ICICI Bank",
+    "loanType": "Education Loan",
+    "interestRate": "9.25% p.a. onwards",
+    "processingFee": "1% for international, Nil for domestic",
+    "maxTenureYears": 12,
+    "features": ["Instant sanction letter", "Covers laptops and travel", "Section 80E tax benefits"],
+    "link": "https://www.icicibank.com/personal-banking/loans/education-loan"
+  },
+  {
+    "bankName": "ICICI Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "10.00% p.a. onwards",
+    "processingFee": "1% of loan amount",
+    "maxTenureYears": 1,
+    "features": ["Minimum documentation", "Loan disbursed in 45 minutes", "Secure vault storage"],
+    "link": "https://www.icicibank.com/personal-banking/loans/gold-loan"
+  },
+  {
+    "bankName": "ICICI Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.85% p.a. onwards",
+    "processingFee": "Up to ₹5,000",
+    "maxTenureYears": 7,
+    "features": ["Insta Auto Loan", "Fast processing", "Partnered with major auto dealers"],
+    "link": "https://www.icicibank.com/personal-banking/loans/car-loan"
+  },
+  {
+    "bankName": "Axis Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.70% p.a. onwards",
+    "processingFee": "Up to 1% of loan amount (Min ₹10,000)",
+    "maxTenureYears": 30,
+    "features": ["Quick sanction", "Asha Home Loan for low income", "No prepayment charges for floating rates"],
+    "link": "https://www.axisbank.com/retail/loans/home-loan"
+  },
+  {
+    "bankName": "Axis Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.49% p.a. onwards",
+    "processingFee": "Up to 2%",
+    "maxTenureYears": 5,
+    "features": ["Loans up to ₹40 Lakhs", "24x7 application processing", "Transfer existing loans for lower EMI"],
+    "link": "https://www.axisbank.com/retail/loans/personal-loan"
+  },
+  {
+    "bankName": "Axis Bank",
+    "loanType": "Education Loan",
+    "interestRate": "9.95% p.a. onwards",
+    "processingFee": "Nil up to ₹10 Lakhs",
+    "maxTenureYears": 15,
+    "features": ["No margin money up to ₹4 Lakhs", "Pre-visa disbursement available", "Doorstep service"],
+    "link": "https://www.axisbank.com/retail/loans/education-loan"
+  },
+  {
+    "bankName": "Axis Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "9.99% p.a. onwards",
+    "processingFee": "0.50% - 1%",
+    "maxTenureYears": 3,
+    "features": ["Same day disbursal", "Highest value for gold", "No hidden charges"],
+    "link": "https://www.axisbank.com/retail/loans/gold-loan"
+  },
+  {
+    "bankName": "Axis Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "9.10% p.a. onwards",
+    "processingFee": "Up to ₹7,000",
+    "maxTenureYears": 7,
+    "features": ["100% on-road funding for select models", "Special schemes for EV buyers", "Reward points on EMI"],
+    "link": "https://www.axisbank.com/retail/loans/car-loan"
+  },
+  {
+    "bankName": "Kotak Mahindra Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.50% p.a. onwards",
+    "processingFee": "Up to 0.50% of loan amount",
+    "maxTenureYears": 20,
+    "features": ["Special concession for women", "Digital application process", "Home Loan balance transfer"],
+    "link": "https://www.kotak.com/en/personal-banking/loans/home-loan.html"
+  },
+  {
+    "bankName": "Kotak Mahindra Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.99% p.a. onwards",
+    "processingFee": "Up to 3%",
+    "maxTenureYears": 5,
+    "features": ["Quick online disbursal", "No guarantor required", "Loans up to ₹40 Lakhs"],
+    "link": "https://www.kotak.com/en/personal-banking/loans/personal-loan.html"
+  },
+  {
+    "bankName": "Kotak Mahindra Bank",
+    "loanType": "Education Loan",
+    "interestRate": "10.50% p.a. onwards",
+    "processingFee": "1%",
+    "maxTenureYears": 10,
+    "features": ["Quick processing for premier institutes", "Maximum funding options", "Tax benefits"],
+    "link": "https://www.kotak.com/en/personal-banking/loans/education-loan.html"
+  },
+  {
+    "bankName": "Kotak Mahindra Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "9.50% p.a. onwards",
+    "processingFee": "2% of loan amount",
+    "maxTenureYears": 4,
+    "features": ["Free insurance for gold", "Minimal documentation", "Same-day disbursal"],
+    "link": "https://www.kotak.com/en/personal-banking/loans/gold-loan.html"
+  },
+  {
+    "bankName": "Kotak Mahindra Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.90% p.a. onwards",
+    "processingFee": "Up to ₹5,000",
+    "maxTenureYears": 7,
+    "features": ["Fast turnaround time", "Flexible payment structures", "Top-up loans available"],
+    "link": "https://www.kotak.com/en/personal-banking/loans/car-loan.html"
+  },
+  {
+    "bankName": "Canara Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.45% p.a. onwards",
+    "processingFee": "0.50% (Max ₹10,000)",
+    "maxTenureYears": 30,
+    "features": ["No prepayment penalty", "Interest concession for women", "Available for NRIs"],
+    "link": "https://canarabank.com/"
+  },
+  {
+    "bankName": "Canara Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "11.25% p.a. onwards",
+    "processingFee": "1%",
+    "maxTenureYears": 5,
+    "features": ["For salaried and pensioners", "Quick disbursal", "No hidden charges"],
+    "link": "https://canarabank.com/"
+  },
+  {
+    "bankName": "Canara Bank",
+    "loanType": "Education Loan",
+    "interestRate": "8.60% p.a. onwards",
+    "processingFee": "Nil for India studies",
+    "maxTenureYears": 15,
+    "features": ["Vidyatur scheme for students", "No collateral up to ₹7.5 Lakh", "Covers hostel fees"],
+    "link": "https://canarabank.com/"
+  },
+  {
+    "bankName": "Canara Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "8.80% p.a. onwards",
+    "processingFee": "₹250 to ₹1000",
+    "maxTenureYears": 1,
+    "features": ["Swarna Loan scheme", "Low interest rates", "Simple procedure"],
+    "link": "https://canarabank.com/"
+  },
+  {
+    "bankName": "Canara Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.80% p.a. onwards",
+    "processingFee": "0.25% of loan amount",
+    "maxTenureYears": 7,
+    "features": ["Covers EVs", "Concession for women", "No advance EMI"],
+    "link": "https://canarabank.com/"
+  },
+  {
+    "bankName": "Indian Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.40% p.a. onwards",
+    "processingFee": "0.40% (Max ₹20,000)",
+    "maxTenureYears": 30,
+    "features": ["Ind Awas scheme", "No prepayment charges", "Concession for women"],
+    "link": "https://www.indianbank.in/"
+  },
+  {
+    "bankName": "Indian Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.80% p.a. onwards",
+    "processingFee": "1%",
+    "maxTenureYears": 5,
+    "features": ["Clean loan", "For salaried individuals", "Quick processing"],
+    "link": "https://www.indianbank.in/"
+  },
+  {
+    "bankName": "Indian Bank",
+    "loanType": "Education Loan",
+    "interestRate": "8.50% p.a. onwards",
+    "processingFee": "Nil up to ₹20 Lakhs",
+    "maxTenureYears": 15,
+    "features": ["IBA Model scheme", "Covers laptop", "Tax benefits"],
+    "link": "https://www.indianbank.in/"
+  },
+  {
+    "bankName": "Indian Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "8.65% p.a. onwards",
+    "processingFee": "Nil to ₹500",
+    "maxTenureYears": 1,
+    "features": ["BJewel loan", "High per gram rate", "Instant approval"],
+    "link": "https://www.indianbank.in/"
+  },
+  {
+    "bankName": "Indian Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.65% p.a. onwards",
+    "processingFee": "0.50%",
+    "maxTenureYears": 7,
+    "features": ["For new and used cars", "Low EMI", "Zero foreclosure charges"],
+    "link": "https://www.indianbank.in/"
+  },
+  {
+    "bankName": "Union Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.35% p.a. onwards",
+    "processingFee": "0.50% (Max ₹15,000)",
+    "maxTenureYears": 30,
+    "features": ["Union Home scheme", "No prepayment penalty", "Free credit card on request"],
+    "link": "https://www.unionbankofindia.co.in/"
+  },
+  {
+    "bankName": "Union Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "11.40% p.a. onwards",
+    "processingFee": "1%",
+    "maxTenureYears": 5,
+    "features": ["Union Personal scheme", "Loans up to ₹15 Lakhs", "Flexible repayment"],
+    "link": "https://www.unionbankofindia.co.in/"
+  },
+  {
+    "bankName": "Union Bank",
+    "loanType": "Education Loan",
+    "interestRate": "8.25% p.a. onwards",
+    "processingFee": "Nil for domestic studies",
+    "maxTenureYears": 15,
+    "features": ["Union Education scheme", "Concession for girl students", "No collateral up to ₹7.5L"],
+    "link": "https://www.unionbankofindia.co.in/"
+  },
+  {
+    "bankName": "Union Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "0.50%",
+    "maxTenureYears": 1,
+    "features": ["Cash disbursed in minutes", "Safe custody", "Bullet repayment option"],
+    "link": "https://www.unionbankofindia.co.in/"
+  },
+  {
+    "bankName": "Union Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "Nil during festive offers",
+    "maxTenureYears": 7,
+    "features": ["Union Miles scheme", "Fast processing", "For 2 wheelers and 4 wheelers"],
+    "link": "https://www.unionbankofindia.co.in/"
+  },
+  {
+    "bankName": "Punjab National Bank",
+    "loanType": "Home Loan",
+    "interestRate": "8.40% p.a. onwards",
+    "processingFee": "0.35%",
+    "maxTenureYears": 30,
+    "features": ["PNB Max Saver option", "Interest calculated on daily reducing balance", "No hidden charges"],
+    "link": "https://www.pnbindia.in/"
+  },
+  {
+    "bankName": "Punjab National Bank",
+    "loanType": "Personal Loan",
+    "interestRate": "10.75% p.a. onwards",
+    "processingFee": "1%",
+    "maxTenureYears": 5,
+    "features": ["Available for pensioners and salaried", "Minimal documentation", "Quick disbursal"],
+    "link": "https://www.pnbindia.in/"
+  },
+  {
+    "bankName": "Punjab National Bank",
+    "loanType": "Education Loan",
+    "interestRate": "8.20% p.a. onwards",
+    "processingFee": "Nil up to ₹4 Lakhs",
+    "maxTenureYears": 15,
+    "features": ["PNB Saraswati scheme", "No collateral for premier institutes", "Tax benefits"],
+    "link": "https://www.pnbindia.in/"
+  },
+  {
+    "bankName": "Punjab National Bank",
+    "loanType": "Gold Loan",
+    "interestRate": "8.70% p.a. onwards",
+    "processingFee": "0.75%",
+    "maxTenureYears": 1,
+    "features": ["PNB Swarna scheme", "High per gram rate", "Low interest rate"],
+    "link": "https://www.pnbindia.in/"
+  },
+  {
+    "bankName": "Punjab National Bank",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.70% p.a. onwards",
+    "processingFee": "0.25%",
+    "maxTenureYears": 7,
+    "features": ["PNB Saarthi scheme", "Low EMI", "Zero foreclosure charges"],
+    "link": "https://www.pnbindia.in/"
+  },
+  {
+    "bankName": "Bank of Baroda",
+    "loanType": "Home Loan",
+    "interestRate": "8.40% p.a. onwards",
+    "processingFee": "Nil to ₹10,000",
+    "maxTenureYears": 30,
+    "features": ["Baroda Home Loan Advantage", "Free accidental insurance", "No prepayment charges"],
+    "link": "https://www.bankofbaroda.in/"
+  },
+  {
+    "bankName": "Bank of Baroda",
+    "loanType": "Personal Loan",
+    "interestRate": "10.90% p.a. onwards",
+    "processingFee": "2%",
+    "maxTenureYears": 5,
+    "features": ["For private and govt employees", "Overdraft facility available", "Loans up to ₹20 Lakhs"],
+    "link": "https://www.bankofbaroda.in/"
+  },
+  {
+    "bankName": "Bank of Baroda",
+    "loanType": "Education Loan",
+    "interestRate": "8.15% p.a. onwards",
+    "processingFee": "Nil for domestic, 1% for abroad",
+    "maxTenureYears": 15,
+    "features": ["Baroda Gyan Scheme", "0.50% concession for girl students", "No margin up to ₹4 Lakhs"],
+    "link": "https://www.bankofbaroda.in/"
+  },
+  {
+    "bankName": "Bank of Baroda",
+    "loanType": "Gold Loan",
+    "interestRate": "8.95% p.a. onwards",
+    "processingFee": "0.50%",
+    "maxTenureYears": 1,
+    "features": ["High Loan to Value", "Quick processing", "Bullet repayment"],
+    "link": "https://www.bankofbaroda.in/"
+  },
+  {
+    "bankName": "Bank of Baroda",
+    "loanType": "Vehicle Loan",
+    "interestRate": "8.75% p.a. onwards",
+    "processingFee": "₹1,500 flat",
+    "maxTenureYears": 7,
+    "features": ["Up to 90% financing", "No foreclosure charges", "Calculate EMI online"],
+    "link": "https://www.bankofbaroda.in/"
+  }
+]
