@@ -256,12 +256,7 @@ app.use('/api/goals', goalRoutes);
 app.use('/api/loans', bankLoanRoutes);
 app.use('/api/security', securityRoutes);
 app.use('/api/market', marketRoutes);
-app.get('/api/test', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Latest backend is running'
-  });
-});
+
 
 
 // Catch-all route error fallback
