@@ -294,15 +294,76 @@ const askFinBot = async (message, history = [], userData = {}) => {
     loanContext = `\n\n[BANK LOANS DIRECTORY CONTEXT]\nThe user is asking about loans. Use the following real-world database records to provide accurate answers and comparisons:\n${loanStrings}`;
   }
 
-  let marketContext = '';
-  const cachedMarket = getCachedMarketData();
-  if (cachedMarket) {
-    marketContext = `\n\n[LIVE MARKET INSIGHTS]\nHere are the current real-time market trends you can use to give investment advice:\n`;
-    marketContext += `Crypto: ${cachedMarket.crypto.map(c => `${c.name}: ${c.price} (${c.change}%)`).join(', ')}\n`;
-    marketContext += `Metals: ${cachedMarket.metals.map(m => `${m.name}: ${m.price} (${m.change}%)`).join(', ')}\n`;
-    marketContext += `Stocks: ${cachedMarket.stocks.map(s => `${s.name}: ${s.price} (${s.change}%)`).join(', ')}\n`;
+let marketContext = '';
+
+const cachedMarket = getCachedMarketData();
+
+if (cachedMarket) {
+  marketContext = `\n\n[LIVE MARKET INSIGHTS]\n`;
+
+  // Crypto
+  if (cachedMarket.crypto) {
+    const { bitcoin, ethereum } = cachedMarket.crypto;
+
+    marketContext += `Crypto: `;
+    if (bitcoin) {
+      marketContext += `Bitcoin ₹${bitcoin.price.toLocaleString('en-IN')} (${bitcoin.change > 0 ? '+' : ''}${bitcoin.change}%), `;
+    }
+    if (ethereum) {
+      marketContext += `Ethereum ₹${ethereum.price.toLocaleString('en-IN')} (${ethereum.change > 0 ? '+' : ''}${ethereum.change}%)`;
+    }
+    marketContext += `\n`;
+  }
+
+  // Metals
+  if (cachedMarket.metals) {
+    const { gold, silver } = cachedMarket.metals;
+
+    marketContext += `Metals: `;
+    if (gold) {
+      marketContext += `Gold ₹${gold.price}/${gold.unit} (${gold.change > 0 ? '+' : ''}${gold.change}%), `;
+    }
+    if (silver) {
+      marketContext += `Silver ₹${silver.price}/${silver.unit} (${silver.change > 0 ? '+' : ''}${silver.change}%)`;
+    }
+    marketContext += `\n`;
+  }
+
+  // Indian Markets
+  if (cachedMarket.indianMarkets) {
+    const { nifty50, sensex } = cachedMarket.indianMarkets;
+
+    marketContext += `Indian Markets: `;
+    if (nifty50) {
+      marketContext += `Nifty 50 ${nifty50.value} (${nifty50.change > 0 ? '+' : ''}${nifty50.change}%), `;
+    }
+    if (sensex) {
+      marketContext += `Sensex ${sensex.value} (${sensex.change > 0 ? '+' : ''}${sensex.change}%)`;
+    }
+    marketContext += `\n`;
+  }
+
+  // International Markets
+  if (cachedMarket.international) {
+    const { nasdaq, sp500, dowJones } = cachedMarket.international;
+
+    marketContext += `International: `;
+    if (nasdaq) {
+      marketContext += `NASDAQ ${nasdaq.value} (${nasdaq.change > 0 ? '+' : ''}${nasdaq.change}%), `;
+    }
+    if (sp500) {
+      marketContext += `S&P 500 ${sp500.value} (${sp500.change > 0 ? '+' : ''}${sp500.change}%), `;
+    }
+    if (dowJones) {
+      marketContext += `Dow Jones ${dowJones.value} (${dowJones.change > 0 ? '+' : ''}${dowJones.change}%)`;
+    }
+    marketContext += `\n`;
+  }
+
+  if (cachedMarket.aiTip) {
     marketContext += `AI Tip: ${cachedMarket.aiTip}\n`;
   }
+}
 
   // ── Local fallback when Gemini is unavailable ────────────────────────────
   if (!geminiAvailable) {
