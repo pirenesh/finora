@@ -18,7 +18,8 @@ import {
   CreditCard,
   Target,
   Shield,
-  Activity
+  Activity,
+  Receipt
 } from 'lucide-react';
 
 export const Sidebar = () => {
@@ -32,6 +33,7 @@ export const Sidebar = () => {
     { name: t('nav.income'), path: '/income', icon: TrendingUp },
     { name: t('nav.expense'), path: '/expense', icon: TrendingDown },
     { name: t('nav.budgets'), path: '/budgets', icon: Wallet },
+    { name: 'Bills & Payments', path: '/bills', icon: Receipt },
     { name: t('nav.transactions'), path: '/transactions', icon: History },
     { name: t('nav.debt'), path: '/debt', icon: Coins },
     { name: t('nav.bankLink'), path: '/bank-accounts', icon: CreditCard },

@@ -36,6 +36,7 @@ import { Debt } from './pages/Debt';
 import { BankLink } from './pages/BankLink';
 import { Goals } from './pages/Goals';
 import { Market } from './pages/Market';
+import { Bills } from './pages/Bills';
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAppUnlocked } = useAppLock();
@@ -193,6 +194,16 @@ function App() {
                 <AuthGuard>
                   <PrivateLayout>
                     <Analytics />
+                  </PrivateLayout>
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/bills"
+              element={
+                <AuthGuard>
+                  <PrivateLayout>
+                    <Bills />
                   </PrivateLayout>
                 </AuthGuard>
               }
