@@ -18,7 +18,11 @@ import {
   AlertTriangle,
   Lock,
   Eye,
-  EyeOff
+  EyeOff,
+  Globe,
+  Briefcase,
+  Clock,
+  ArrowRight
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -51,6 +55,9 @@ export const Dashboard = () => {
   const [aiReport, setAiReport] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [aiLoading, setAiLoading] = useState(false);
+  
+  const [marketData, setMarketData] = useState<any>(null);
+  const [marketLoading, setMarketLoading] = useState(true);
 
   // UPI Simulator States
   const [connections, setConnections] = useState<any[]>([]);
@@ -85,6 +92,16 @@ export const Dashboard = () => {
       const aiRes = await axios.get(`/api/ai/report?month=${activeMonth}`);
       if (aiRes.data.success) {
         setAiReport(aiRes.data.data);
+      }
+
+      // Fetch market data
+      try {
+        const marketRes = await axios.get('/api/market/insights');
+        setMarketData(marketRes.data);
+      } catch (err) {
+        console.error('Failed to load market data', err);
+      } finally {
+        setMarketLoading(false);
       }
 
       // Fetch bank connections for UPI simulator
@@ -202,6 +219,35 @@ export const Dashboard = () => {
     if (summary.income === 0) return 0;
     return parseFloat(((summary.balance / summary.income) * 100).toFixed(1));
   };
+
+  const renderMarketChange = (change: number) => {
+    const isPos = change >= 0;
+    return (
+      <div className={`flex items-center text-xs font-bold px-2 py-1 rounded-md ${isPos ? 'bg-brand-success/10 text-brand-success' : 'bg-brand-danger/10 text-brand-danger'}`}>
+        {isPos ? <TrendingUp size={12} className="mr-1" /> : <TrendingDown size={12} className="mr-1" />}
+        {Math.abs(change).toFixed(2)}%
+      </div>
+    );
+  };
+
+  const renderMarketCard = (title: string, value: string, change: number, Icon: any, colorClass: string) => (
+    <div className="p-4 rounded-2xl glass-panel hover-glow border border-white/5 relative overflow-hidden flex flex-col justify-between group transition-all duration-300">
+      <div className="flex justify-between items-start mb-3 relative z-10">
+        <div className={`p-2 rounded-xl bg-dark-bg ${colorClass} border border-white/5 shadow-inner`}>
+          <Icon size={18} />
+        </div>
+        {renderMarketChange(change)}
+      </div>
+      <div className="relative z-10">
+        <h4 className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mb-1">{title}</h4>
+        <div className="text-xl font-black text-white group-hover:scale-[1.02] transition-transform origin-left">{value}</div>
+      </div>
+      <div className="mt-3 pt-3 border-t border-white/5 flex items-center text-[9px] text-gray-500 font-semibold relative z-10">
+        <Clock size={10} className="mr-1" />
+        Just updated
+      </div>
+    </div>
+  );
 
   return (
     <motion.div 
@@ -346,6 +392,83 @@ export const Dashboard = () => {
               <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-secondary/10 rounded-full blur-xl pointer-events-none" />
             </motion.div>
           </motion.div>
+
+          {/* Live Market Overview */}
+          <div className="space-y-4 pt-2 pb-2">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider flex items-center">
+                <Activity size={16} className="mr-2 text-brand-primary" />
+                Live Market Overview
+              </h3>
+              <button onClick={() => navigate('/market')} className="text-xs font-bold text-brand-primary hover:underline flex items-center">
+                View More <ArrowRight size={14} className="ml-1" />
+              </button>
+            </div>
+            
+            {marketLoading || !marketData ? (
+               <div className="h-32 flex items-center justify-center glass-panel rounded-2xl">
+                 <div className="w-8 h-8 border-3 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+               </div>
+            ) : (
+              <div className="space-y-4">
+                {/* Scrolling Ticker */}
+                <div className="w-full overflow-hidden glass-panel rounded-xl py-2.5 border border-white/5 relative">
+                  <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-dark-card to-transparent z-10 pointer-events-none" />
+                  <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-dark-card to-transparent z-10 pointer-events-none" />
+                  
+                  <style>{`
+                    @keyframes scrollTicker {
+                      0% { transform: translateX(0); }
+                      100% { transform: translateX(-50%); }
+                    }
+                    .animate-ticker {
+                      display: flex;
+                      width: max-content;
+                      animation: scrollTicker 20s linear infinite;
+                    }
+                    .animate-ticker:hover {
+                      animation-play-state: paused;
+                    }
+                  `}</style>
+                  <div className="animate-ticker">
+                    {/* First copy */}
+                    <div className="flex space-x-8 px-4 items-center whitespace-nowrap">
+                      <span className="text-xs font-bold text-white flex items-center">GOLD <span className="mx-2 text-gray-400">₹{marketData.metals.gold.price}</span> {marketData.metals.gold.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.metals.gold.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.metals.gold.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">SILVER <span className="mx-2 text-gray-400">₹{marketData.metals.silver.price}</span> {marketData.metals.silver.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.metals.silver.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.metals.silver.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">BTC <span className="mx-2 text-gray-400">₹{marketData.crypto.bitcoin.price.toLocaleString()}</span> {marketData.crypto.bitcoin.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.crypto.bitcoin.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.crypto.bitcoin.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">NIFTY <span className="mx-2 text-gray-400">{marketData.indianMarkets.nifty50.value.toLocaleString()}</span> {marketData.indianMarkets.nifty50.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.indianMarkets.nifty50.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.indianMarkets.nifty50.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">NASDAQ <span className="mx-2 text-gray-400">{marketData.international.nasdaq.value.toLocaleString()}</span> {marketData.international.nasdaq.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.international.nasdaq.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.international.nasdaq.change}%</span>}</span>
+                    </div>
+                    {/* Duplicated copy for continuous loop */}
+                    <div className="flex space-x-8 px-4 items-center whitespace-nowrap">
+                      <span className="text-xs font-bold text-white flex items-center">GOLD <span className="mx-2 text-gray-400">₹{marketData.metals.gold.price}</span> {marketData.metals.gold.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.metals.gold.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.metals.gold.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">SILVER <span className="mx-2 text-gray-400">₹{marketData.metals.silver.price}</span> {marketData.metals.silver.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.metals.silver.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.metals.silver.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">BTC <span className="mx-2 text-gray-400">₹{marketData.crypto.bitcoin.price.toLocaleString()}</span> {marketData.crypto.bitcoin.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.crypto.bitcoin.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.crypto.bitcoin.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">NIFTY <span className="mx-2 text-gray-400">{marketData.indianMarkets.nifty50.value.toLocaleString()}</span> {marketData.indianMarkets.nifty50.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.indianMarkets.nifty50.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.indianMarkets.nifty50.change}%</span>}</span>
+                      <span className="text-gray-600 dark:text-gray-400 font-black">•</span>
+                      <span className="text-xs font-bold text-white flex items-center">NASDAQ <span className="mx-2 text-gray-400">{marketData.international.nasdaq.value.toLocaleString()}</span> {marketData.international.nasdaq.change >= 0 ? <span className="text-brand-success flex items-center"><TrendingUp size={12} className="mr-0.5"/>+{marketData.international.nasdaq.change}%</span> : <span className="text-brand-danger flex items-center"><TrendingDown size={12} className="mr-0.5"/>{marketData.international.nasdaq.change}%</span>}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Glassmorphism Cards Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                  {renderMarketCard('NIFTY 50', marketData.indianMarkets.nifty50.value.toLocaleString(), marketData.indianMarkets.nifty50.change, Briefcase, 'text-blue-400')}
+                  {renderMarketCard('SENSEX', marketData.indianMarkets.sensex.value.toLocaleString(), marketData.indianMarkets.sensex.change, Briefcase, 'text-blue-500')}
+                  {renderMarketCard('Gold', `₹${marketData.metals.gold.price}`, marketData.metals.gold.change, Activity, 'text-yellow-400')}
+                  {renderMarketCard('Silver', `₹${marketData.metals.silver.price}`, marketData.metals.silver.change, Activity, 'text-gray-300')}
+                  {renderMarketCard('Bitcoin (BTC)', `₹${marketData.crypto.bitcoin.price.toLocaleString()}`, marketData.crypto.bitcoin.change, Globe, 'text-orange-500')}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* AI Insights Section with Subscription Gate */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

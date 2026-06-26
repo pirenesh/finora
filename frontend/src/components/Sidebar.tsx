@@ -36,7 +36,6 @@ export const Sidebar = () => {
     { name: t('nav.debt'), path: '/debt', icon: Coins },
     { name: t('nav.bankLink'), path: '/bank-accounts', icon: CreditCard },
     { name: t('nav.goals'), path: '/goals', icon: Target },
-    { name: 'Market', path: '/market', icon: Activity },
     { name: t('nav.analytics'), path: '/analytics', icon: BarChart3 },
     { name: t('nav.profile'), path: '/profile', icon: User },
     { name: 'Security', path: '/security', icon: Shield },
