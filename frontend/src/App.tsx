@@ -1,15 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import { AuthGuard } from './components/AuthGuard';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
+import { MobileNav } from './components/MobileNav';
 import { FloatingBot } from './components/FloatingBot';
 import { GPayNotification } from './components/GPayNotification';
 import { AppLockProvider, useAppLock } from './context/AppLockContext';
 import { LockScreen } from './components/Security/LockScreen';
 import { useDebtNotifications } from './hooks/useDebtNotifications';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // SaaS Marketing Pages (Landing removed per request, now Login is entry)
 import { Pricing } from './pages/Pricing';
@@ -33,9 +35,11 @@ import { LandingNavbar } from './components/LandingNavbar';
 import { Debt } from './pages/Debt';
 import { BankLink } from './pages/BankLink';
 import { Goals } from './pages/Goals';
+import { Market } from './pages/Market';
 
 const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAppUnlocked } = useAppLock();
+  const location = useLocation();
   useDebtNotifications(); // Initialize debt push notifications
 
   if (!isAppUnlocked) {
@@ -51,11 +55,22 @@ const PrivateLayout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar />
       <div className="flex-grow flex flex-col min-w-0 relative">
         <Header />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 relative z-10">
-          {children}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 md:p-6 pb-20 md:pb-6 relative z-10">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         </main>
       </div>
       
+      <MobileNav />
       {/* AI Chatbot floating assistant */}
       <FloatingBot />
     </div>
@@ -158,6 +173,16 @@ function App() {
                 <AuthGuard>
                   <PrivateLayout>
                     <Goals />
+                  </PrivateLayout>
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/market"
+              element={
+                <AuthGuard>
+                  <PrivateLayout>
+                    <Market />
                   </PrivateLayout>
                 </AuthGuard>
               }

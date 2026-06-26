@@ -749,9 +749,9 @@ export const Debt = () => {
           <div className="w-full max-w-md rounded-[20px] border border-white/10 shadow-[0_0_40px_rgba(212,175,55,0.15)] bg-white dark:bg-[#0b0f19] overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
             
             {/* Premium Gradient Header */}
-            <div className="px-6 py-5 flex items-center justify-between text-white bg-[#d4af37] text-[#0a0800] shrink-0 relative overflow-hidden">
+            <div className="px-6 py-5 flex items-center justify-between text-white bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-400 shrink-0 relative overflow-hidden shadow-md">
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-              <h3 className="font-bold text-lg flex items-center relative z-10 tracking-wide">
+              <h3 className="font-bold text-lg flex items-center relative z-10 tracking-wide text-white">
                 <Coins size={18} className="mr-2" />
                 Log New Debt
               </h3>
@@ -805,10 +805,10 @@ export const Debt = () => {
                   required
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all"
+                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                   placeholder="Lender Name"
                 />
-                <label htmlFor="debtName" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                <label htmlFor="debtName" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                   Lender or Borrower Name *
                 </label>
               </div>
@@ -824,10 +824,10 @@ export const Debt = () => {
                   step="0.01"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="peer w-full pl-8 pr-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all"
+                  className="peer w-full pl-8 pr-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                   placeholder="0.00"
                 />
-                <label htmlFor="debtAmount" className="absolute left-8 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                <label htmlFor="debtAmount" className="absolute left-8 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                   Principal Amount *
                 </label>
               </div>
@@ -881,9 +881,9 @@ export const Debt = () => {
                     required
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold transition-all cursor-pointer"
+                    className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold transition-all cursor-pointer"
                   />
-                  <label htmlFor="startDate" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-focus:text-[#d4af37]">
+                  <label htmlFor="startDate" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-focus:text-emerald-500">
                     Start Date *
                   </label>
                 </div>
@@ -893,9 +893,9 @@ export const Debt = () => {
                     id="dueDate"
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
-                    className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold transition-all cursor-pointer"
+                    className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold transition-all cursor-pointer"
                   />
-                  <label htmlFor="dueDate" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-focus:text-[#d4af37]">
+                  <label htmlFor="dueDate" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-focus:text-emerald-500">
                     Next Due Date
                   </label>
                 </div>
@@ -922,10 +922,10 @@ export const Debt = () => {
                   id="debtDesc"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all"
+                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                   placeholder="Memo"
                 />
-                <label htmlFor="debtDesc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                <label htmlFor="debtDesc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                   Memo
                 </label>
               </div>
@@ -941,10 +941,10 @@ export const Debt = () => {
                       id="debtUpi"
                       value={upiId}
                       onChange={(e) => setUpiId(e.target.value)}
-                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all"
+                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                       placeholder="Lender's UPI ID"
                     />
-                    <label htmlFor="debtUpi" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                    <label htmlFor="debtUpi" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                       Lender's UPI ID
                     </label>
                   </div>
@@ -957,10 +957,10 @@ export const Debt = () => {
                       id="debtAcc"
                       value={accountNumber}
                       onChange={(e) => setAccountNumber(e.target.value)}
-                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all"
+                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                       placeholder="Account Number"
                     />
-                    <label htmlFor="debtAcc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                    <label htmlFor="debtAcc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                       Bank Account Number
                     </label>
                   </div>
@@ -970,10 +970,10 @@ export const Debt = () => {
                       id="debtIfsc"
                       value={ifscCode}
                       onChange={(e) => setIfscCode(e.target.value)}
-                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]/50 text-sm font-semibold placeholder-transparent transition-all uppercase"
+                      className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-gray-700/50 bg-gray-50/50 dark:bg-[#060713]/50 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all uppercase"
                       placeholder="IFSC"
                     />
-                    <label htmlFor="debtIfsc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-[#d4af37]">
+                    <label htmlFor="debtIfsc" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                       IFSC Code
                     </label>
                   </div>
@@ -1005,7 +1005,7 @@ export const Debt = () => {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 rounded-xl text-xs font-bold text-white bg-[#d4af37] text-[#0a0800] hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#d4af37]/30 transition-all duration-200"
+                  className="flex-1 py-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-400 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/30 transition-all duration-200"
                 >
                   Save Debt
                 </button>

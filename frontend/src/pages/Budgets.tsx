@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Plus, Trash2, Calendar, AlertTriangle, Landmark, Sparkles, CheckCircle2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { BudgetModal } from '../components/BudgetModal';
 import { useToast } from '../context/ToastContext';
 
@@ -62,6 +63,29 @@ export const Budgets = () => {
 
   const overall = getOverallBudgetStatus();
 
+  const getCategoryEmoji = (cat: string) => {
+    switch (cat.toLowerCase()) {
+      case 'housing': return '🏡';
+      case 'vehicle': return '🚗';
+      case 'education': return '📚';
+      case 'travel': return '✈️';
+      case 'retirement': return '🏖️';
+      case 'savings': return '💰';
+      case 'wedding': return '💍';
+      case 'business': return '🏢';
+      case 'electronics': return '💻';
+      case 'investment': return '📈';
+      case 'charity': return '🤝';
+      case 'health': return '🏥';
+      case 'emergency': return '🚨';
+      case 'food': return '☕';
+      case 'shopping': return '🛒';
+      case 'bills': return '📄';
+      case 'total': return '🏦';
+      default: return '🏷️';
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Title Header */}
@@ -122,10 +146,12 @@ export const Budgets = () => {
                 </span>
               </div>
               
-              <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-3">
-                <div 
-                  className={`h-3 rounded-full transition-all duration-300 ${overall.isOverspent ? 'bg-brand-danger' : 'bg-brand-primary'}`}
-                  style={{ width: `${Math.min(100, overall.percentage)}%` }}
+              <div className="w-full bg-dark-bg rounded-full h-3 shadow-inner border border-white/5 overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min(100, overall.percentage)}%` }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className={`h-full rounded-full ${overall.isOverspent ? 'bg-brand-danger' : 'bg-brand-primary'}`}
                 />
               </div>
             </div>
@@ -160,32 +186,50 @@ export const Budgets = () => {
           </div>
 
           {/* Budgets Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <motion.div 
+            initial="hidden" animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+            }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
             {budgets.length === 0 ? (
               <div className="col-span-full py-16 text-center text-gray-400 font-semibold glass-panel rounded-2xl">
                 No budget thresholds set for this month. Click "Configure Budget" to establish boundaries.
               </div>
             ) : (
               budgets.map(b => (
-                <div key={b._id} className="p-5 rounded-2xl glass-panel relative flex flex-col justify-between h-44 hover-glow border border-gray-200 dark:border-dark-border/45">
+                <motion.div 
+                  variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
+                  key={b._id} 
+                  className="p-6 rounded-3xl glass-panel relative flex flex-col justify-between h-48 hover-glow border border-white/5 overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-brand-primary/10 to-transparent pointer-events-none" />
+
                   <div className="flex justify-between items-start z-10">
-                    <div>
-                      <span className="px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase bg-brand-primary/10 text-brand-primary">
-                        {b.category === 'Total' ? 'Overall Cap' : b.category}
-                      </span>
-                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-1.5">Monthly Limit</h4>
-                      <h3 className="text-lg font-black text-gray-800 dark:text-white">₹{b.limit.toLocaleString('en-IN')}</h3>
+                    <div className="flex items-start space-x-3">
+                      <div className="text-2xl p-2.5 bg-dark-bg/50 rounded-2xl shadow-inner border border-white/5">
+                        {getCategoryEmoji(b.category)}
+                      </div>
+                      <div>
+                        <span className="px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase bg-brand-primary/10 text-brand-primary">
+                          {b.category === 'Total' ? 'Overall Cap' : b.category}
+                        </span>
+                        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mt-1.5">Monthly Limit</h4>
+                        <h3 className="text-lg font-black text-gray-800 dark:text-white">₹{b.limit.toLocaleString('en-IN')}</h3>
+                      </div>
                     </div>
                     <button
                       onClick={() => handleDeleteBudget(b._id)}
-                      className="p-1.5 rounded-lg border border-brand-danger/10 hover:border-brand-danger/25 text-brand-danger bg-brand-danger/5 hover:bg-brand-danger/10 transition"
+                      className="p-2 rounded-xl border border-brand-danger/10 hover:border-brand-danger/25 text-brand-danger bg-brand-danger/5 hover:bg-brand-danger/10 transition"
                       title="Remove Target"
                     >
-                      <Trash2 size={13} />
+                      <Trash2 size={14} />
                     </button>
                   </div>
 
-                  <div className="mt-4 space-y-1.5 z-10">
+                  <div className="mt-4 space-y-2 z-10">
                     <div className="flex justify-between text-[11px] font-semibold">
                       <span className="text-gray-400">Spent: ₹{b.spent.toLocaleString('en-IN')}</span>
                       <span className={b.isOverspent ? 'text-brand-danger font-black' : 'text-gray-500 dark:text-gray-300'}>
@@ -193,27 +237,27 @@ export const Budgets = () => {
                       </span>
                     </div>
 
-                    <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full transition-all duration-300 ${b.isOverspent ? 'bg-brand-danger shadow-sm shadow-brand-danger/20' : 'bg-brand-primary shadow-sm shadow-brand-primary/20'}`}
-                        style={{ width: `${Math.min(100, b.percentage)}%` }}
+                    <div className="w-full bg-dark-bg rounded-full h-2.5 shadow-inner border border-white/5 overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${Math.min(100, b.percentage)}%` }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        className={`h-full ${b.isOverspent ? 'bg-brand-danger shadow-sm shadow-brand-danger/20' : 'bg-brand-primary shadow-sm shadow-brand-primary/20'}`}
                       />
                     </div>
                   </div>
 
                   {b.isOverspent && (
-                    <div className="absolute top-1.5 right-12 z-20 animate-pulse">
+                    <div className="absolute top-2 right-12 z-20 animate-pulse">
                       <span className="bg-brand-danger/10 text-brand-danger text-[9px] font-black uppercase px-2 py-0.5 rounded-lg border border-brand-danger/25">
                         Overspent
                       </span>
                     </div>
                   )}
-
-                  <div className="absolute right-0 bottom-0 w-20 h-20 bg-brand-primary rounded-tl-full pointer-events-none" />
-                </div>
+                </motion.div>
               ))
             )}
-          </div>
+          </motion.div>
         </>
       )}
 

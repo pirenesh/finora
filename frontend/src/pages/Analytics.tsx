@@ -10,6 +10,7 @@ import {
   Brain, Sparkles, Activity,
   Award, Lock
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
 export const Analytics = () => {
@@ -21,7 +22,7 @@ export const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
 
-  const COLORS = ['#d4af37', '#7c3aed', '#1d4ed8', '#047857', '#be123c', '#d97706', '#4f46e5', '#db2777', '#0369a1'];
+  const COLORS = ['#10B981', '#2563EB', '#8B5CF6', '#F59E0B', '#EC4899', '#06B6D4', '#14B8A6', '#6366F1', '#F43F5E'];
 
   const fetchAnalyticsData = async () => {
     try {
@@ -112,7 +113,11 @@ export const Analytics = () => {
   const comparisonData = getComparisonData();
 
   return (
-    <div className="space-y-6">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       {/* Title Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -278,9 +283,9 @@ export const Analytics = () => {
                       <Line 
                         type="monotone" 
                         dataKey="Spent" 
-                        stroke="#d4af37" 
+                        stroke="#F43F5E" 
                         strokeWidth={3} 
-                        dot={{ r: 3, fill: '#d4af37' }} 
+                        dot={{ r: 3, fill: '#F43F5E' }} 
                         activeDot={{ r: 5 }} 
                       />
                     </LineChart>
@@ -311,8 +316,8 @@ export const Analytics = () => {
                     }} 
                   />
                   <Legend wrapperStyle={{ fontSize: '11px' }} />
-                  <Bar dataKey="Income" fill="#047857" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="Expense" fill="#be123c" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="Income" fill="#10B981" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="Expense" fill="#F43F5E" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -361,7 +366,7 @@ export const Analytics = () => {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };
 export default Analytics;

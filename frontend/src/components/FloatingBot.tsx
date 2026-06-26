@@ -15,6 +15,7 @@ import {
   Calculator,
   Landmark
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
 interface ChatMessage {
@@ -28,7 +29,7 @@ interface ChatMessage {
 export const MoneyRobotIcon = ({ size = 20 }: { size?: number }) => (
   <div className="relative flex items-center justify-center">
     <Bot size={size} className="text-white shrink-0" />
-    <span className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-gray-900 rounded-full w-3.5 h-3.5 flex items-center justify-center border border-violet-600 shadow-sm animate-bounce text-[9px] font-extrabold leading-none">
+    <span className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-gray-900 rounded-full w-3.5 h-3.5 flex items-center justify-center border border-emerald-600 shadow-sm animate-bounce text-[9px] font-extrabold leading-none">
       ₹
     </span>
   </div>
@@ -216,21 +217,20 @@ export const FloatingBot = () => {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
 
       {/* ── Chat Window ─────────────────────────────────────────────────── */}
+      <AnimatePresence>
       {isOpen && (
-        <div
-          className="w-[360px] sm:w-[420px] h-[580px] mb-4 flex flex-col rounded-2xl border border-gray-200 dark:border-dark-border shadow-2xl glass-panel-heavy overflow-hidden"
-          style={{ animation: 'slideUpFade 0.25s ease-out' }}
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="w-[360px] sm:w-[420px] h-[580px] mb-4 flex flex-col rounded-3xl border border-white/10 shadow-2xl glass-panel overflow-hidden"
         >
-          <style>{`
-            @keyframes slideUpFade {
-              from { opacity: 0; transform: translateY(20px) scale(0.97); }
-              to   { opacity: 1; transform: translateY(0)   scale(1); }
-            }
-          `}</style>
 
           {/* Header */}
-          <div className="h-16 bg-gradient-to-r from-brand-primary via-violet-600 to-brand-info px-4 flex items-center justify-between text-white shrink-0">
-            <div className="flex items-center space-x-3">
+          <div className="h-16 bg-gradient-to-r from-emerald-600 to-teal-500 px-4 flex items-center justify-between text-white shrink-0 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+            <div className="flex items-center space-x-3 relative z-10">
               <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md ring-1 ring-white/30">
                 <MoneyRobotIcon size={20} />
               </div>
@@ -242,7 +242,7 @@ export const FloatingBot = () => {
                 <span className="text-[10px] text-white/75 font-medium">Personal Financial Assistant</span>
               </div>
             </div>
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1 relative z-10">
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1.5 rounded-lg hover:bg-white/15 transition"
@@ -261,54 +261,59 @@ export const FloatingBot = () => {
           </div>
 
           {/* Messages area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-gray-50/50 dark:bg-dark-bg/40 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3.5 bg-dark-bg/80 backdrop-blur-md custom-scrollbar">
 
             {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                key={msg.id} 
+                className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
                 {/* Bot avatar */}
                 {msg.sender === 'bot' && (
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-primary to-brand-info flex items-center justify-center mr-2 mt-0.5 shrink-0 shadow-md">
-                    <Bot size={14} className="text-white" />
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center mr-2 mt-0.5 shrink-0 shadow-lg">
+                    <Bot size={16} className="text-white" />
                   </div>
                 )}
 
                 <div className={`
-                  max-w-[82%] rounded-2xl px-4 py-2.5 shadow-sm
+                  max-w-[82%] rounded-2xl px-4 py-2.5 shadow-sm relative overflow-hidden
                   ${msg.sender === 'user'
-                    ? 'bg-gradient-to-br from-brand-primary to-violet-600 text-white rounded-tr-none'
-                    : 'bg-white dark:bg-dark-card border border-gray-100 dark:border-dark-border text-gray-800 dark:text-gray-100 rounded-tl-none'}
+                    ? 'bg-gradient-to-br from-emerald-500 to-teal-400 text-white rounded-tr-none'
+                    : 'bg-white/5 border border-white/10 text-gray-100 rounded-tl-none'}
                 `}>
                   {msg.sender === 'bot' ? (
                     <MarkdownText text={msg.text} />
                   ) : (
                     <p className="text-xs md:text-sm font-medium leading-relaxed">{msg.text}</p>
                   )}
-                  <span className={`block text-[9px] mt-1.5 text-right ${msg.sender === 'user' ? 'text-white/55' : 'text-gray-400'}`}>
+                  <span className={`block text-[9px] mt-1.5 text-right ${msg.sender === 'user' ? 'text-white/70' : 'text-gray-400'}`}>
                     {new Date(msg.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
 
             {/* Typing indicator */}
             {loading && (
-              <div className="flex justify-start items-end space-x-2">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-primary to-brand-info flex items-center justify-center shrink-0 shadow-md">
-                  <Bot size={14} className="text-white" />
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start items-end space-x-2">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center shrink-0 shadow-lg">
+                  <Bot size={16} className="text-white" />
                 </div>
-                <div className="bg-white dark:bg-dark-card border border-gray-100 dark:border-dark-border rounded-2xl rounded-tl-none px-4 py-3 shadow-sm flex flex-col space-y-1.5">
+                <div className="bg-white/5 border border-white/10 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm flex flex-col space-y-1.5">
                   <div className="flex space-x-1.5 items-center">
                     {[0, 150, 300].map((delay) => (
                       <span
                         key={delay}
-                        className="w-2 h-2 rounded-full bg-brand-primary/60 animate-bounce"
+                        className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce"
                         style={{ animationDelay: `${delay}ms` }}
                       />
                     ))}
                   </div>
                   <span className="text-[9px] text-gray-400 font-medium">FinBot is thinking...</span>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             <div ref={chatEndRef} />
@@ -316,8 +321,8 @@ export const FloatingBot = () => {
 
           {/* Quick Actions — shown only on first welcome message */}
           {messages.length === 1 && !loading && (
-            <div className="px-3 py-2.5 border-t border-gray-100 dark:border-dark-border bg-white/40 dark:bg-dark-card/20 shrink-0">
-              <p className="text-[9px] text-gray-400 font-semibold uppercase tracking-wider mb-2">Quick Questions</p>
+            <div className="px-4 py-3 border-t border-white/5 bg-dark-bg/90 shrink-0">
+              <p className="text-[9px] text-emerald-400 font-semibold uppercase tracking-wider mb-2">Quick Questions</p>
               <div className="grid grid-cols-2 gap-1.5">
                 {QUICK_ACTIONS.slice(0, 6).map((action, i) => {
                   const Icon = action.icon;
@@ -325,9 +330,9 @@ export const FloatingBot = () => {
                     <button
                       key={i}
                       onClick={() => handleSendMessage(action.text)}
-                      className="flex items-center space-x-1.5 p-2 rounded-xl text-left border border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card hover:bg-brand-primary/5 hover:border-brand-primary/30 hover:shadow-sm text-[10px] font-semibold text-gray-600 dark:text-gray-300 transition-all duration-200"
+                      className="flex items-center space-x-1.5 p-2 rounded-xl text-left border border-white/10 bg-white/5 hover:bg-white/10 hover:border-emerald-500/50 hover:shadow-sm text-[10px] font-semibold text-gray-300 transition-all duration-200"
                     >
-                      <Icon size={11} className="text-brand-primary shrink-0" />
+                      <Icon size={11} className="text-emerald-400 shrink-0" />
                       <span className="truncate">{action.text}</span>
                     </button>
                   );
@@ -337,7 +342,7 @@ export const FloatingBot = () => {
           )}
 
           {/* Input bar */}
-          <div className="px-3 py-2.5 border-t border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card shrink-0">
+          <div className="px-3 py-2.5 border-t border-white/10 bg-dark-bg shrink-0 rounded-b-3xl">
             <div className="flex items-end space-x-2">
               <div className="flex-1 relative">
                 <textarea
@@ -350,12 +355,12 @@ export const FloatingBot = () => {
                   disabled={loading}
                   className={`
                     w-full py-2.5 px-3 resize-none outline-none rounded-xl border
-                    bg-gray-50 dark:bg-dark-bg text-xs md:text-sm max-h-28
-                    text-gray-800 dark:text-white transition-all duration-200
+                    bg-white/5 text-xs md:text-sm max-h-28
+                    text-white transition-all duration-200
                     disabled:opacity-60
                     ${isOverLimit
                       ? 'border-brand-danger focus:border-brand-danger'
-                      : 'border-gray-200 dark:border-dark-border focus:border-brand-primary dark:focus:border-brand-primary'}
+                      : 'border-white/10 focus:border-emerald-500/50'}
                   `}
                   style={{ scrollbarWidth: 'none' }}
                 />
@@ -368,7 +373,7 @@ export const FloatingBot = () => {
               <button
                 onClick={() => handleSendMessage()}
                 disabled={!message.trim() || loading || isOverLimit}
-                className="p-2.5 rounded-xl bg-gradient-to-br from-brand-primary to-violet-600 hover:brightness-110 text-white disabled:opacity-50 shadow-md shadow-brand-primary/25 transition-all duration-200 active:scale-95 shrink-0"
+                className="p-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:scale-[1.02] text-white disabled:opacity-50 shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 shrink-0"
                 title="Send message (Enter)"
               >
                 <Send size={16} />
@@ -384,18 +389,19 @@ export const FloatingBot = () => {
               <Sparkles size={8} className="text-yellow-400" />
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* ── Floating Toggle Button ─────────────────────────────────────── */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative w-14 h-14 rounded-full bg-gradient-to-tr from-brand-primary to-brand-info flex items-center justify-center text-white shadow-xl shadow-brand-primary/35 hover:scale-105 transition-all duration-300 active:scale-95"
+        className="group relative w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-xl shadow-emerald-500/30 hover:scale-105 transition-all duration-300 active:scale-95"
         title={isOpen ? 'Close FinBot' : 'Open FinBot AI'}
       >
         {/* Ping animation */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-brand-primary opacity-25 group-hover:scale-110 animate-ping z-0 pointer-events-none" />
+          <span className="absolute inset-0 rounded-full bg-emerald-500 opacity-25 group-hover:scale-110 animate-ping z-0 pointer-events-none" />
         )}
 
         {isOpen ? (

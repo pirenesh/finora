@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   TrendingUp, 
@@ -31,7 +32,6 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { TransactionModal } from '../components/TransactionModal';
 import { BudgetModal } from '../components/BudgetModal';
-import { MarketTrends } from '../components/MarketTrends';
 import { useTranslation } from 'react-i18next';
 
 export const Dashboard = () => {
@@ -63,7 +63,6 @@ export const Dashboard = () => {
   const [hideBalances, setHideBalances] = useState(true);
 
   const activeMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
-  const hideTicker = modalOpen || budgetModalOpen;
 
   const fetchDashboardData = async () => {
     try {
@@ -205,45 +204,56 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Action Buttons Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
+      {/* Welcome & Quick Actions Toolbar */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 glass-panel p-5">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-gray-800 dark:text-white flex items-center gap-2">
-            {t('dashboard.title')}
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+            Welcome back, {user?.username}! 👋
             <button 
               onClick={() => setHideBalances(!hideBalances)} 
-              className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition"
+              className="text-gray-400 hover:text-white transition"
               title={hideBalances ? "Show Balances" : "Hide Balances"}
             >
               {hideBalances ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </h1>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-            {t('dashboard.subtitle')}
+          <p className="text-xs text-gray-400 mt-1">
+            Here's what's happening with your finances today.
           </p>
         </div>
-        <div className="flex items-center space-x-2.5">
+        <div className="flex items-center space-x-2.5 overflow-x-auto pb-2 sm:pb-0">
           <button
             onClick={() => openTransactionModal('income')}
-            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-success hover:bg-emerald-600 shadow-md shadow-emerald-500/10 transition duration-200"
+            className="flex-shrink-0 flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-success hover:bg-emerald-600 shadow-md shadow-emerald-500/20 transition duration-200"
           >
             <Plus size={16} />
-            <span>{t('dashboard.addIncome')}</span>
+            <span>Add Income</span>
           </button>
           <button
             onClick={() => openTransactionModal('expense')}
-            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-danger hover:bg-rose-600 shadow-md shadow-rose-500/10 transition duration-200"
+            className="flex-shrink-0 flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-danger hover:bg-rose-600 shadow-md shadow-rose-500/20 transition duration-200"
           >
             <Plus size={16} />
-            <span>{t('dashboard.addExpense')}</span>
+            <span>Add Expense</span>
           </button>
           <button
-            onClick={() => setBudgetModalOpen(true)}
-            className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-primary hover:bg-indigo-600 shadow-md shadow-brand-primary/10 transition duration-200"
+            onClick={() => navigate('/debt')}
+            className="flex-shrink-0 flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-secondary hover:bg-blue-600 shadow-md shadow-blue-500/20 transition duration-200"
           >
             <PlusCircle size={16} />
-            <span>{t('dashboard.configureBudget')}</span>
+            <span>Add Debt</span>
+          </button>
+          <button
+            onClick={() => navigate('/goals')}
+            className="flex-shrink-0 flex items-center space-x-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-brand-primary hover:bg-emerald-500 shadow-md shadow-emerald-500/20 transition duration-200"
+          >
+            <PlusCircle size={16} />
+            <span>Add Goal</span>
           </button>
         </div>
       </div>
@@ -255,31 +265,36 @@ export const Dashboard = () => {
       ) : (
         <>
           {/* Summary Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <motion.div 
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            initial="hidden" animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.1 } }
+            }}
+          >
             {/* Balance Card */}
-            <div className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36">
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }} className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36 border border-brand-primary/20">
               <div className="flex justify-between items-center z-10">
-                <span className="text-xs font-semibold text-gray-400">{t('dashboard.netBalance')}</span>
-                <div className="w-8 h-8 rounded-lg bg-brand-info/10 flex items-center justify-center text-brand-info">
+                <span className="text-xs font-semibold text-gray-400">Net Balance</span>
+                <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
                   <Wallet size={16} />
                 </div>
               </div>
               <div className="mt-4 z-10">
-                <h3 className={`text-2xl font-black ${summary.balance >= 0 ? 'text-gray-800 dark:text-white' : 'text-brand-danger'}`}>
+                <h3 className={`text-2xl font-black ${summary.balance >= 0 ? 'text-white' : 'text-brand-danger'}`}>
                   ₹{hideBalances ? '••••••' : summary.balance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </h3>
-                <p className="text-[10px] text-gray-400 mt-1 font-semibold">
-                  {t('dashboard.availableCapital')}
-                </p>
+                <p className="text-[10px] text-gray-400 mt-1 font-semibold">Available Capital</p>
               </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-brand-info/10 to-transparent rounded-tl-full pointer-events-none" />
-            </div>
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-primary/10 rounded-full blur-xl pointer-events-none" />
+            </motion.div>
 
             {/* Income Card */}
-            <div className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36">
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }} className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36 border border-brand-success/20">
               <div className="flex justify-between items-center z-10">
-                <span className="text-xs font-semibold text-gray-400">{t('dashboard.totalIncome')}</span>
-                <div className="w-8 h-8 rounded-lg bg-brand-success/10 flex items-center justify-center text-brand-success">
+                <span className="text-xs font-semibold text-gray-400">Monthly Income</span>
+                <div className="w-8 h-8 rounded-full bg-brand-success/10 flex items-center justify-center text-brand-success">
                   <TrendingUp size={16} />
                 </div>
               </div>
@@ -287,18 +302,16 @@ export const Dashboard = () => {
                 <h3 className="text-2xl font-black text-brand-success">
                   ₹{hideBalances ? '••••••' : summary.income.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </h3>
-                <p className="text-[10px] text-emerald-500 font-bold mt-1">
-                  {t('dashboard.activeInflows')}
-                </p>
+                <p className="text-[10px] text-brand-success/80 font-bold mt-1">+ Active Inflows</p>
               </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-brand-success/10 to-transparent rounded-tl-full pointer-events-none" />
-            </div>
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-success/10 rounded-full blur-xl pointer-events-none" />
+            </motion.div>
 
             {/* Expense Card */}
-            <div className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36">
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }} className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36 border border-brand-danger/20">
               <div className="flex justify-between items-center z-10">
-                <span className="text-xs font-semibold text-gray-400">{t('dashboard.totalExpense')}</span>
-                <div className="w-8 h-8 rounded-lg bg-brand-danger/10 flex items-center justify-center text-brand-danger">
+                <span className="text-xs font-semibold text-gray-400">Monthly Expense</span>
+                <div className="w-8 h-8 rounded-full bg-brand-danger/10 flex items-center justify-center text-brand-danger">
                   <TrendingDown size={16} />
                 </div>
               </div>
@@ -306,40 +319,33 @@ export const Dashboard = () => {
                 <h3 className="text-2xl font-black text-brand-danger">
                   ₹{hideBalances ? '••••••' : summary.expense.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                 </h3>
-                <p className="text-[10px] text-rose-500 font-bold mt-1">
-                  {t('dashboard.cashOutflows')}
-                </p>
+                <p className="text-[10px] text-brand-danger/80 font-bold mt-1">- Cash Outflows</p>
               </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-brand-danger/10 to-transparent rounded-tl-full pointer-events-none" />
-            </div>
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-danger/10 rounded-full blur-xl pointer-events-none" />
+            </motion.div>
 
             {/* Savings Rate Card */}
-            <div className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36">
+            <motion.div variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }} className="p-5 rounded-2xl glass-panel hover-glow relative overflow-hidden flex flex-col justify-between h-36 border border-brand-secondary/20">
               <div className="flex justify-between items-center z-10">
-                <span className="text-xs font-semibold text-gray-400">{t('dashboard.savingsRate')}</span>
-                <div className="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+                <span className="text-xs font-semibold text-gray-400">Savings Rate</span>
+                <div className="w-8 h-8 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary">
                   <DollarSign size={16} />
                 </div>
               </div>
               <div className="mt-4 z-10">
-                <h3 className="text-2xl font-black text-brand-primary">
+                <h3 className="text-2xl font-black text-brand-secondary">
                   {getSavingsRate()}%
                 </h3>
-                <div className="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-1.5 mt-2">
+                <div className="w-full bg-dark-bg rounded-full h-1.5 mt-2">
                   <div 
-                    className="bg-brand-primary h-1.5 rounded-full transition-all duration-300"
+                    className="bg-brand-secondary h-1.5 rounded-full transition-all duration-1000 ease-out"
                     style={{ width: `${Math.max(0, Math.min(100, getSavingsRate()))}%` }}
                   />
                 </div>
               </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-brand-primary rounded-tl-full pointer-events-none" />
-            </div>
-          </div>
-
-          {/* Market Trends Ticker */}
-          <div className="-mx-4 sm:mx-0 sm:rounded-2xl shadow-2xl shadow-brand-primary/10 mb-6">
-            <MarketTrends isHidden={hideTicker} />
-          </div>
+              <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-secondary/10 rounded-full blur-xl pointer-events-none" />
+            </motion.div>
+          </motion.div>
 
           {/* AI Insights Section with Subscription Gate */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -424,22 +430,33 @@ export const Dashboard = () => {
 
             {/* Health Score Gauge */}
             <div className="p-6 rounded-2xl glass-panel flex flex-col justify-between items-center text-center min-h-[220px]">
-              <div className="w-full flex items-center justify-between border-b border-gray-200 dark:border-dark-border pb-3">
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{t('dashboard.healthScore')}</span>
+              <div className="w-full flex items-center justify-between border-b border-dark-border pb-3">
+                <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Health Score</span>
                 <Activity size={16} className="text-brand-primary" />
               </div>
 
               {aiReport ? (
                 <div className="my-3 flex flex-col items-center">
                   <div className="relative flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full border-4 border-gray-200 dark:border-gray-800 flex items-center justify-center">
-                      <div className="text-center">
-                        <span className="text-3xl font-black text-brand-primary">{aiReport.healthScore}</span>
-                        <span className="text-xs text-gray-400 block font-semibold">/100</span>
-                      </div>
+                    <svg className="w-28 h-28 transform -rotate-90">
+                      <circle cx="56" cy="56" r="48" className="stroke-dark-border" strokeWidth="8" fill="none" />
+                      <motion.circle 
+                        cx="56" cy="56" r="48" 
+                        className="stroke-brand-primary" 
+                        strokeWidth="8" 
+                        fill="none" 
+                        strokeDasharray={301.59}
+                        initial={{ strokeDashoffset: 301.59 }}
+                        animate={{ strokeDashoffset: 301.59 - (301.59 * (aiReport.healthScore || 0)) / 100 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-3xl font-black text-brand-primary">{aiReport.healthScore}</span>
+                      <span className="text-[10px] text-gray-400 font-semibold block -mt-1">/ 100</span>
                     </div>
                   </div>
-                  <h4 className={`text-base font-black mt-3 uppercase tracking-wider 
+                  <h4 className={`text-sm font-black mt-3 uppercase tracking-wider 
                     ${aiReport.healthStatus === 'Excellent' || aiReport.healthStatus === 'Good' ? 'text-brand-success' : 'text-brand-warning'}
                   `}>
                     {aiReport.healthStatus} Status
@@ -447,7 +464,7 @@ export const Dashboard = () => {
                 </div>
               ) : (
                 <div className="py-12 text-center text-xs text-gray-400">
-                  Click analyze to evaluate health score.
+                  Click refresh to evaluate health score.
                 </div>
               )}
             </div>
@@ -466,8 +483,8 @@ export const Dashboard = () => {
                   <BarChart data={getChartData()} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="colorBarGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#d4af37" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#7c3aed" stopOpacity={0.2}/>
+                        <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#2563EB" stopOpacity={0.2}/>
                       </linearGradient>
                     </defs>
                     <XAxis dataKey="name" stroke="#6b7280" fontSize={11} tickLine={false} />
@@ -566,17 +583,24 @@ export const Dashboard = () => {
                       </tr>
                     ) : (
                       transactions.map((tx) => (
-                        <tr key={tx._id} className="text-gray-700 dark:text-gray-300 font-semibold">
-                          <td className="py-3">{new Date(tx.date).toLocaleDateString('en-IN')}</td>
-                          <td className="py-3">
-                            <span className={`px-2 py-0.5 rounded-lg text-[10px] font-extrabold uppercase
-                              ${tx.type === 'income' ? 'bg-brand-success/10 text-brand-success' : 'bg-brand-danger/10 text-brand-danger'}
-                            `}>
-                              {tx.category}
-                            </span>
+                        <tr key={tx._id} className="text-gray-700 dark:text-gray-300 font-semibold group hover:bg-dark-bg/50 transition-colors">
+                          <td className="py-3 px-2 rounded-l-xl">
+                            {new Date(tx.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}
                           </td>
-                          <td className="py-3 font-normal text-gray-500 dark:text-gray-400">{tx.description || '-'}</td>
-                          <td className={`py-3 text-right font-black ${tx.type === 'income' ? 'text-brand-success' : 'text-brand-danger'}`}>
+                          <td className="py-3 px-2">
+                            <div className="flex items-center space-x-2">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center 
+                                ${tx.type === 'income' ? 'bg-brand-success/10 text-brand-success' : 'bg-brand-danger/10 text-brand-danger'}
+                              `}>
+                                {tx.type === 'income' ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
+                              </div>
+                              <span className="text-[11px] font-bold uppercase">{tx.category}</span>
+                            </div>
+                          </td>
+                          <td className="py-3 px-2 font-normal text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
+                            {tx.description || '-'}
+                          </td>
+                          <td className={`py-3 px-2 text-right font-black rounded-r-xl ${tx.type === 'income' ? 'text-brand-success' : 'text-white'}`}>
                             {tx.type === 'income' ? '+' : '-'} ₹{tx.amount.toLocaleString('en-IN')}
                           </td>
                         </tr>
@@ -754,7 +778,7 @@ export const Dashboard = () => {
         initialMonth={activeMonth}
         onSuccess={fetchDashboardData}
       />
-    </div>
+    </motion.div>
   );
 };
 export default Dashboard;

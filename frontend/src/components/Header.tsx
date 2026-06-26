@@ -69,7 +69,7 @@ export const Header = () => {
     <header className="sticky top-0 z-30 h-20 w-full flex items-center justify-between px-6 md:px-8 border-b border-gray-200 dark:border-dark-border glass-panel">
       {/* Page Title / Mobile Padding */}
       <div className="pl-12 md:pl-0">
-        <h2 className="text-lg md:text-xl font-bold tracking-tight text-gray-800 dark:text-white font-royal">
+        <h2 className="text-lg md:text-xl font-bold tracking-tight text-white">
           {getPageTitle()}
         </h2>
         <p className="hidden md:block text-[11px] text-gray-400 font-medium">
@@ -104,7 +104,7 @@ export const Header = () => {
           <img 
             src={user?.profilePic || 'https://api.dicebear.com/7.x/bottts/svg'} 
             alt="User profile" 
-            className="w-10 h-10 rounded-xl object-cover ring-2 ring-brand-primary/20 bg-gray-100 dark:bg-gray-800"
+            className="w-10 h-10 rounded-full object-cover ring-2 ring-brand-primary/50 bg-dark-card"
           />
         </div>
       </div>

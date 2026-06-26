@@ -10,8 +10,19 @@ import {
   TrendingUp, 
   TrendingDown, 
   Tag,
-  Lock
+  Lock,
+  MoreVertical,
+  Edit2,
+  Trash2,
+  ShoppingCart,
+  Briefcase,
+  HeartPulse,
+  MonitorPlay,
+  Coffee,
+  Plane,
+  FileText
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
@@ -162,8 +173,27 @@ export const Transactions = () => {
     printWindow.document.close();
   };
 
+  const getCategoryIcon = (category: string) => {
+    switch (category.toLowerCase()) {
+      case 'food': return <Coffee size={16} />;
+      case 'shopping': return <ShoppingCart size={16} />;
+      case 'business':
+      case 'salary':
+      case 'freelancing': return <Briefcase size={16} />;
+      case 'healthcare': return <HeartPulse size={16} />;
+      case 'entertainment': return <MonitorPlay size={16} />;
+      case 'travel': return <Plane size={16} />;
+      case 'bills': return <FileText size={16} />;
+      default: return <Tag size={16} />;
+    }
+  };
+
   return (
-    <div className="space-y-6">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       {/* Title Header & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -307,72 +337,76 @@ export const Transactions = () => {
         </form>
       </div>
 
-      {/* Transactions Table Grid */}
-      <div className="p-6 rounded-2xl glass-panel space-y-4">
+      {/* Transactions List */}
+      <div className="space-y-4">
         {loading ? (
           <div className="h-60 flex items-center justify-center">
             <div className="w-10 h-10 border-4 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs md:text-sm">
-              <thead>
-                <tr className="border-b border-gray-200 dark:border-dark-border text-gray-400 uppercase tracking-wider font-bold">
-                  <th className="py-3 px-2">Date</th>
-                  <th className="py-3 px-2">Type</th>
-                  <th className="py-3 px-2">Category</th>
-                  <th className="py-3 px-2">Description</th>
-                  <th className="py-3 px-2 text-right">Amount</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100 dark:divide-dark-border">
-                {transactions.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="py-16 text-center text-gray-400 font-semibold">
-                      No matching transactions found. Try adjusting your query parameters.
-                    </td>
-                  </tr>
-                ) : (
-                  transactions.map((tx) => (
-                    <tr key={tx._id} className="text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-100/10 dark:hover:bg-dark-card/25 transition">
-                      <td className="py-3.5 px-2 flex items-center space-x-1.5">
-                        <Calendar size={13} className="text-gray-400" />
-                        <span>{new Date(tx.date).toLocaleDateString('en-IN')}</span>
-                      </td>
-                      <td className="py-3.5 px-2">
-                        {tx.type === 'income' ? (
-                          <span className="px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-brand-success/10 text-brand-success flex items-center w-fit space-x-0.5">
-                            <TrendingUp size={10} />
-                            <span>Inflow</span>
-                          </span>
-                        ) : (
-                          <span className="px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-brand-danger/10 text-brand-danger flex items-center w-fit space-x-0.5">
-                            <TrendingDown size={10} />
-                            <span>Outflow</span>
-                          </span>
-                        )}
-                      </td>
-                      <td className="py-3.5 px-2 text-gray-800 dark:text-gray-200">
-                        <span className="flex items-center space-x-1 font-bold">
-                          <Tag size={12} className="text-gray-400" />
-                          <span>{tx.category}</span>
-                        </span>
-                      </td>
-                      <td className="py-3.5 px-2 text-gray-500 dark:text-gray-400 font-normal">
-                        {tx.description || '-'}
-                      </td>
-                      <td className={`py-3.5 px-2 text-right font-black ${tx.type === 'income' ? 'text-brand-success' : 'text-brand-danger'}`}>
-                        {tx.type === 'income' ? '+' : '-'} ₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+        ) : transactions.length === 0 ? (
+          <div className="p-12 text-center text-gray-400 font-semibold glass-panel rounded-2xl">
+            No matching transactions found. Try adjusting your query parameters.
           </div>
+        ) : (
+          <motion.div 
+            className="space-y-3"
+            initial="hidden" animate="show"
+            variants={{
+              hidden: { opacity: 0 },
+              show: { opacity: 1, transition: { staggerChildren: 0.05 } }
+            }}
+          >
+            {transactions.map((tx) => (
+              <motion.div 
+                key={tx._id} 
+                variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
+                className="relative overflow-hidden rounded-2xl glass-panel group"
+              >
+                {/* Background Actions (Revealed on Swipe) */}
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4 space-x-2 bg-gradient-to-l from-brand-danger/20 to-transparent w-1/3 justify-end">
+                  <button className="p-2 rounded-xl bg-white/10 hover:bg-brand-info text-white transition">
+                    <Edit2 size={16} />
+                  </button>
+                  <button className="p-2 rounded-xl bg-white/10 hover:bg-brand-danger text-white transition">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+
+                {/* Foreground Card */}
+                <motion.div 
+                  drag="x"
+                  dragConstraints={{ left: -100, right: 0 }}
+                  className="relative bg-dark-card border border-white/5 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 z-10 hover:bg-dark-bg transition"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-3 rounded-2xl flex-shrink-0 ${tx.type === 'income' ? 'bg-brand-success/10 text-brand-success' : 'bg-brand-danger/10 text-brand-danger'}`}>
+                      {getCategoryIcon(tx.category)}
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white mb-0.5">{tx.description || tx.category}</h4>
+                      <div className="flex items-center space-x-2 text-xs font-semibold text-gray-400">
+                        <span className="flex items-center"><Calendar size={12} className="mr-1" /> {new Date(tx.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                        <span>•</span>
+                        <span className="px-1.5 py-0.5 rounded bg-white/5">{tx.category}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between sm:flex-col sm:items-end w-full sm:w-auto">
+                    <span className={`text-lg font-black ${tx.type === 'income' ? 'text-brand-success' : 'text-white'}`}>
+                      {tx.type === 'income' ? '+' : '-'} ₹{tx.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                    </span>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider ${tx.type === 'income' ? 'text-brand-success/80' : 'text-brand-danger/80'}`}>
+                      {tx.type} Status: Cleared
+                    </span>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 export default Transactions;

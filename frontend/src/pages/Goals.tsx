@@ -14,6 +14,7 @@ import {
   HelpCircle,
   PiggyBank
 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useToast } from '../context/ToastContext';
 import { useTranslation } from 'react-i18next';
 
@@ -154,27 +155,31 @@ export const Goals = () => {
     return months > 0 ? months : 0;
   };
 
-  const getCategoryColor = (cat: string) => {
+  const getCategoryEmoji = (cat: string) => {
     switch (cat) {
-      case 'housing': return 'bg-blue-600/10 text-blue-500 border-blue-500/20';
-      case 'vehicle': return 'bg-cyan-600/10 text-cyan-500 border-cyan-500/20';
-      case 'education': return 'bg-violet-600/10 text-violet-500 border-violet-500/20';
-      case 'travel': return 'bg-pink-600/10 text-pink-500 border-pink-500/20';
-      case 'retirement': return 'bg-amber-600/10 text-amber-500 border-amber-500/20';
-      case 'savings': return 'bg-emerald-600/10 text-emerald-500 border-emerald-500/20';
-      case 'wedding': return 'bg-rose-600/10 text-rose-500 border-rose-500/20';
-      case 'business': return 'bg-indigo-600/10 text-indigo-500 border-indigo-500/20';
-      case 'electronics': return 'bg-purple-600/10 text-purple-500 border-purple-500/20';
-      case 'investment': return 'bg-amber-500/10 text-yellow-500 border-yellow-500/20';
-      case 'charity': return 'bg-teal-600/10 text-teal-500 border-teal-500/20';
-      case 'health': return 'bg-red-600/10 text-red-500 border-red-500/20';
-      case 'emergency': return 'bg-orange-600/10 text-orange-500 border-orange-500/20';
-      default: return 'bg-slate-600/10 text-slate-500 border-slate-500/20';
+      case 'housing': return '🏡';
+      case 'vehicle': return '🚗';
+      case 'education': return '📚';
+      case 'travel': return '✈️';
+      case 'retirement': return '🏖️';
+      case 'savings': return '💰';
+      case 'wedding': return '💍';
+      case 'business': return '🏢';
+      case 'electronics': return '💻';
+      case 'investment': return '📈';
+      case 'charity': return '🤝';
+      case 'health': return '🏥';
+      case 'emergency': return '🚨';
+      default: return '🎯';
     }
   };
 
   return (
-    <div className="space-y-6">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-6"
+    >
       {/* Title Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -200,57 +205,6 @@ export const Goals = () => {
         </div>
       ) : (
         <>
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Active Goals */}
-            <div className="p-5 rounded-2xl glass-panel relative overflow-hidden flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Active Milestones</span>
-                <h3 className="text-2xl font-black text-gray-800 dark:text-white mt-1">{activeCount} Goals</h3>
-              </div>
-              <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary z-10">
-                <Target size={20} />
-              </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-brand-primary rounded-tl-full pointer-events-none" />
-            </div>
-
-            {/* Total Target */}
-            <div className="p-5 rounded-2xl glass-panel relative overflow-hidden flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Target Funding</span>
-                <h3 className="text-2xl font-black text-gray-800 dark:text-white mt-1">₹{totalTarget.toLocaleString()}</h3>
-              </div>
-              <div className="w-10 h-10 rounded-xl bg-brand-info/10 flex items-center justify-center text-brand-info z-10">
-                <Coins size={20} />
-              </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-brand-primary rounded-tl-full pointer-events-none" />
-            </div>
-
-            {/* Total Saved */}
-            <div className="p-5 rounded-2xl glass-panel relative overflow-hidden flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Total Accumulated Savings</span>
-                <h3 className="text-2xl font-black text-brand-success mt-1">₹{totalSaved.toLocaleString()}</h3>
-              </div>
-              <div className="w-10 h-10 rounded-xl bg-brand-success/10 flex items-center justify-center text-brand-success z-10">
-                <PiggyBank size={20} />
-              </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-brand-success/5 to-transparent rounded-tl-full pointer-events-none" />
-            </div>
-
-            {/* Total Progress */}
-            <div className="p-5 rounded-2xl glass-panel relative overflow-hidden flex items-center justify-between">
-              <div>
-                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Overall Savings Progress</span>
-                <h3 className="text-2xl font-black text-brand-primary mt-1">{overallPct}%</h3>
-              </div>
-              <div className="w-10 h-10 rounded-xl bg-violet-600/10 flex items-center justify-center text-brand-primary z-10">
-                <Percent size={20} />
-              </div>
-              <div className="absolute right-0 bottom-0 w-24 h-24 bg-gradient-to-tr from-violet-600/5 to-transparent rounded-tl-full pointer-events-none" />
-            </div>
-          </div>
-
           {/* Goals Grid list */}
           <div className="space-y-4">
             <h3 className="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider">
@@ -278,29 +232,38 @@ export const Goals = () => {
                   const isAchieved = goal.status === 'achieved' || progress >= 100;
 
                   return (
-                    <div 
-                      key={goal._id} 
-                      className={`p-6 rounded-2xl border transition duration-200 glass-panel flex flex-col justify-between space-y-5 relative overflow-hidden ${
+                    <motion.div 
+                      key={goal._id}
+                      variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
+                      className={`p-6 rounded-3xl border transition duration-300 glass-panel flex flex-col justify-between space-y-5 relative overflow-hidden hover-glow ${
                         isAchieved 
-                          ? 'border-emerald-500/25 shadow-emerald-500/5' 
-                          : 'border-gray-200 dark:border-dark-border'
+                          ? 'border-brand-success/30 shadow-brand-success/10' 
+                          : 'border-white/5'
                       }`}
                     >
+                      {/* Gradient Banner Top */}
+                      <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-brand-primary/20 to-transparent pointer-events-none" />
+                      
                       {isAchieved && (
-                        <div className="absolute right-0 top-0 w-20 h-20 bg-emerald-500/10 rounded-bl-full flex items-center justify-center text-emerald-500 font-bold rotate-12 shrink-0 pointer-events-none">
-                          <Award size={24} />
+                        <div className="absolute right-0 top-0 w-24 h-24 bg-brand-success/10 rounded-bl-full flex items-center justify-center text-brand-success font-bold rotate-12 shrink-0 pointer-events-none">
+                          <Award size={28} />
                         </div>
                       )}
 
-                      <div className="space-y-2">
+                      <div className="space-y-2 relative z-10">
                         <div className="flex items-start justify-between">
-                          <div className="space-y-1 max-w-[80%]">
-                            <span className={`px-2 py-0.5 rounded-lg border text-[9px] font-extrabold uppercase ${getCategoryColor(goal.category)}`}>
-                              {goal.category}
-                            </span>
-                            <h4 className="font-extrabold text-base text-gray-800 dark:text-white leading-tight truncate mt-1">
-                              {goal.name}
-                            </h4>
+                          <div className="flex items-center space-x-3 max-w-[85%]">
+                            <div className="text-3xl p-3 bg-dark-bg/50 rounded-2xl shadow-inner border border-white/5">
+                              {getCategoryEmoji(goal.category)}
+                            </div>
+                            <div className="space-y-0.5">
+                              <span className={`text-[10px] font-extrabold uppercase text-gray-400 tracking-wider`}>
+                                {goal.category}
+                              </span>
+                              <h4 className="font-extrabold text-lg text-white leading-tight truncate">
+                                {goal.name}
+                              </h4>
+                            </div>
                           </div>
                           
                           <button 
@@ -324,11 +287,13 @@ export const Goals = () => {
                           <span className="text-gray-600 dark:text-gray-300">₹{goal.currentSavings.toLocaleString()} Saved</span>
                           <span className="text-gray-400">Target: ₹{goal.targetAmount.toLocaleString()}</span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-800 h-2 rounded-full overflow-hidden">
-                          <div 
-                            style={{ width: `${progress}%` }}
-                            className={`h-full transition-all duration-300 ${
-                              isAchieved ? 'bg-emerald-500' : 'bg-brand-primary'
+                        <div className="w-full bg-dark-bg h-2.5 rounded-full overflow-hidden shadow-inner border border-white/5">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${progress}%` }}
+                            transition={{ duration: 1.5, ease: "easeOut" }}
+                            className={`h-full ${
+                              isAchieved ? 'bg-brand-success' : 'bg-brand-primary'
                             }`}
                           />
                         </div>
@@ -412,7 +377,7 @@ export const Goals = () => {
                           🎉 Milestone Fully Achieved! Congratulations!
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>
@@ -559,7 +524,7 @@ export const Goals = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

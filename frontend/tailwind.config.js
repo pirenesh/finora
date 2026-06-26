@@ -9,22 +9,23 @@ export default {
     extend: {
       colors: {
         dark: {
-          bg: '#0a0800',      // Primary Background
-          card: '#1a1400',    // Secondary/Card Background
-          border: '#3d2e00',  // Border Color
-          text: '#fffbf0',    // Text Primary
+          bg: '#0F172A',      // Premium Dark Navy/Black
+          card: '#1E293B',    // Card Background
+          border: '#334155',  // Border Color
+          text: '#F8FAFC',    // Text Primary
         },
         brand: {
-          primary: '#d4af37', // Gold Primary
-          success: '#86efac', // Success Green
-          danger: '#fca5a5',  // Danger Red
-          warning: '#fbbf24', // Gold Light
-          info: '#93c5fd',    // Info Blue
-          muted: '#8a7a40',   // Text Muted
+          primary: '#10B981', // Emerald Green
+          secondary: '#2563EB', // Royal Blue
+          success: '#34D399', // Light Emerald
+          danger: '#F87171',  // Danger Red
+          warning: '#FBBF24', // Warning Yellow
+          info: '#3B82F6',    // Info Blue
+          muted: '#94A3B8',   // Text Muted
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        sans: ['Inter', 'Poppins', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
       },
       backdropBlur: {

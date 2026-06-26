@@ -143,7 +143,7 @@ export const Profile = () => {
               </p>
               <button
                 onClick={() => setShowProfileLock(true)}
-                className="px-6 py-2.5 rounded-xl font-bold bg-brand-primary hover:bg-indigo-600 text-white shadow-lg transition flex items-center"
+                className="px-6 py-2.5 rounded-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-400 hover:scale-[1.02] text-white shadow-lg shadow-emerald-500/20 transition flex items-center"
               >
                 <Lock size={14} className="mr-2" /> Unlock Profile
               </button>
@@ -237,7 +237,7 @@ export const Profile = () => {
             px-6 py-3 rounded-xl font-bold text-xs shadow-md transition z-10 shrink-0
             ${user?.role === 'pro' 
               ? 'bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-200' 
-              : 'bg-brand-primary hover:bg-indigo-600 text-white shadow-brand-primary/15'}
+              : 'bg-gradient-to-r from-emerald-500 to-teal-400 text-white hover:scale-[1.02] shadow-emerald-500/20'}
           `}
         >
           {user?.role === 'pro' ? 'Downgrade to Free' : 'Upgrade to Pro'}
@@ -266,84 +266,86 @@ export const Profile = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 pt-2">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Username */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
+              {/* Floating Username */}
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10">
+                  <User size={15} />
+                </span>
+                <input
+                  type="text"
+                  id="profileUser"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  className="peer w-full pl-10 pr-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
+                  placeholder="Username"
+                />
+                <label htmlFor="profileUser" className="absolute left-10 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
                   Username
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500">
-                    <User size={15} />
-                  </span>
-                  <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                    className="w-full pl-9 pr-4 py-2.5 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-brand-primary text-sm font-semibold"
-                  />
-                </div>
               </div>
 
-              {/* Email */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Email address
+              {/* Floating Email */}
+              <div className="relative group">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 z-10">
+                  <Mail size={15} />
+                </span>
+                <input
+                  type="email"
+                  id="profileEmail"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="peer w-full pl-10 pr-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
+                  placeholder="Email"
+                />
+                <label htmlFor="profileEmail" className="absolute left-10 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
+                  Email Address
                 </label>
-                <div className="relative">
-                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500">
-                    <Mail size={15} />
-                  </span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full pl-9 pr-4 py-2.5 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-brand-primary text-sm font-semibold"
-                  />
-                </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Password */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  New Password (leave blank to keep)
-                </label>
+              {/* Floating Password */}
+              <div className="relative group">
                 <input
                   type="password"
+                  id="profilePass"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full px-3.5 py-2.5 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-brand-primary text-sm font-semibold"
+                  placeholder="New Password"
+                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold placeholder-transparent transition-all"
                 />
+                <label htmlFor="profilePass" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-xs peer-placeholder-shown:normal-case peer-focus:top-2 peer-focus:text-[10px] peer-focus:uppercase peer-focus:text-emerald-500">
+                  New Password (optional)
+                </label>
               </div>
 
               {/* Currency Settings */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                  Default Currency Symbol
-                </label>
+              <div className="relative group">
                 <select
+                  id="profileCur"
                   value={currency}
                   onChange={(e) => setCurrency(e.target.value)}
-                  className="w-full px-3.5 py-2.5 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-brand-primary text-sm font-semibold cursor-pointer"
+                  className="peer w-full px-4 pt-6 pb-2 outline-none rounded-xl border border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-bg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/50 text-sm font-semibold transition-all cursor-pointer"
                 >
                   <option value="INR">INR (₹)</option>
                   <option value="USD">USD ($)</option>
                   <option value="EUR">EUR (€)</option>
                   <option value="GBP">GBP (£)</option>
                 </select>
+                <label htmlFor="profileCur" className="absolute left-4 top-2 text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all peer-focus:text-emerald-500">
+                  Default Currency
+                </label>
               </div>
             </div>
 
             <button
               type="submit"
               disabled={submitting}
-              className="py-2.5 px-6 rounded-xl font-bold bg-brand-primary hover:bg-indigo-600 text-white flex items-center justify-center shadow-md shadow-brand-primary/10 transition mt-2"
+              className="py-3 px-6 rounded-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-400 hover:scale-[1.02] text-white flex items-center justify-center shadow-lg shadow-emerald-500/20 transition-all mt-4 w-full sm:w-auto"
             >
               <span>{submitting ? 'Updating...' : 'Save Settings'}</span>
             </button>

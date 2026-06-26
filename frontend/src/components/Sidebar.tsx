@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
   TrendingUp, 
@@ -16,7 +17,8 @@ import {
   Coins,
   CreditCard,
   Target,
-  Shield
+  Shield,
+  Activity
 } from 'lucide-react';
 
 export const Sidebar = () => {
@@ -34,6 +36,7 @@ export const Sidebar = () => {
     { name: t('nav.debt'), path: '/debt', icon: Coins },
     { name: t('nav.bankLink'), path: '/bank-accounts', icon: CreditCard },
     { name: t('nav.goals'), path: '/goals', icon: Target },
+    { name: 'Market', path: '/market', icon: Activity },
     { name: t('nav.analytics'), path: '/analytics', icon: BarChart3 },
     { name: t('nav.profile'), path: '/profile', icon: User },
     { name: 'Security', path: '/security', icon: Shield },
@@ -67,22 +70,24 @@ export const Sidebar = () => {
       {/* Sidebar Container */}
       <aside className={`
         fixed md:sticky top-0 left-0 h-screen z-40 w-64 flex flex-col
-        border-r border-dark-border bg-[#050400]
+        border-r border-dark-border bg-dark-bg
         transition-transform duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
       `}>
         {/* Brand Header */}
-        <div className="h-20 flex items-center justify-between px-6 border-b border-dark-border bg-[#0a0800]">
+        <div className="h-20 flex items-center justify-between px-6 border-b border-dark-border bg-dark-bg">
           <div className="flex items-center space-x-2.5">
-            <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20 border border-brand-primary/40 text-black font-royal font-black text-xl">
-              F
+            <div className="w-10 h-10 rounded-xl bg-brand-primary flex items-center justify-center shadow-lg shadow-brand-primary/20 text-white font-bold text-xl">
+              <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                <div className="w-3 h-3 bg-brand-primary rounded-full" />
+              </div>
             </div>
             <div>
-              <h1 className="font-royal font-bold text-base tracking-wide text-brand-primary">
-                FinBot AI
+              <h1 className="font-bold text-base tracking-wide text-white flex items-center">
+                Finora <span className="w-1.5 h-1.5 rounded-full bg-brand-primary ml-1.5" />
               </h1>
-              <span className="text-[9px] text-brand-muted font-semibold tracking-wider font-sans block -mt-0.5">
-                Smart Wealth
+              <span className="text-[10px] text-brand-muted font-medium block">
+                Premium Finance
               </span>
             </div>
           </div>
@@ -100,15 +105,27 @@ export const Sidebar = () => {
                 key={item.path}
                 to={item.path}
                 onClick={() => setIsOpen(false)}
-                className={({ isActive }) => `
-                  flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                  ${isActive 
-                    ? 'bg-brand-primary text-black shadow-sm font-bold' 
-                    : 'text-dark-text hover:text-brand-primary hover:bg-[#1a1400]'}
-                `}
+                className="relative block"
               >
-                <Icon size={18} />
-                <span>{item.name}</span>
+                {({ isActive }) => (
+                  <div className={`
+                    relative flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200 z-10
+                    ${isActive ? 'text-white' : 'text-dark-text/70 hover:text-white'}
+                  `}>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 bg-brand-primary rounded-xl -z-10 shadow-lg shadow-brand-primary/20"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                    <Icon size={18} className={isActive ? 'text-white' : ''} />
+                    <span>{item.name}</span>
+                  </div>
+                )}
               </NavLink>
             );
           })}
