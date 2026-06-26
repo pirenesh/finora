@@ -71,19 +71,17 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
   };
 
   const renderRow = (icon: any, title: string, value: string | number, change?: number, subtitle?: string) => (
-    <div className="flex justify-between items-center p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 transition">
-      <div className="flex items-center space-x-3">
-        <div className="p-2 bg-dark-bg/50 rounded-lg border border-white/10 shadow-inner">
+    <div className="p-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex flex-col justify-between group cursor-pointer shadow-lg">
+      <div className="flex justify-between items-start mb-3">
+        <div className="p-2 rounded-lg bg-dark-bg/50 border border-white/10 shadow-inner">
           {icon}
         </div>
-        <div>
-          <span className="text-sm font-bold text-white block">{title}</span>
-          {subtitle && <span className="text-[10px] text-gray-400 uppercase tracking-wider">{subtitle}</span>}
-        </div>
-      </div>
-      <div className="text-right flex flex-col items-end">
-        <div className="text-sm font-black text-white">{value}</div>
         {change !== undefined && renderChange(change, 'md')}
+      </div>
+      <div>
+        <h4 className="text-gray-400 text-[11px] font-bold uppercase tracking-wider mb-1">{title}</h4>
+        <div className="text-xl font-black text-white group-hover:scale-[1.02] transition-transform origin-left">{value}</div>
+        {subtitle && <div className="text-[10px] text-gray-500 mt-1">{subtitle}</div>}
       </div>
     </div>
   );
@@ -91,14 +89,17 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
   const renderContent = () => {
     if (loading || !data) {
       return (
-        <div className="space-y-3 animate-pulse p-2">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-xl">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-white/10 rounded-lg"></div>
-                <div className="w-24 h-4 bg-white/10 rounded"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className="p-4 rounded-xl bg-white/5 border border-white/10 animate-pulse h-32 flex flex-col justify-between">
+              <div className="flex justify-between">
+                <div className="w-8 h-8 bg-white/10 rounded-lg"></div>
+                <div className="w-12 h-4 bg-white/10 rounded"></div>
               </div>
-              <div className="w-16 h-4 bg-white/10 rounded"></div>
+              <div>
+                <div className="w-16 h-3 bg-white/10 rounded mb-2"></div>
+                <div className="w-24 h-6 bg-white/10 rounded"></div>
+              </div>
             </div>
           ))}
         </div>
@@ -108,30 +109,30 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
     switch (activeTab) {
       case 'metals':
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-2">
-            {renderRow(<Sparkles className="text-yellow-400" size={16} />, "Gold (24K)", `₹${data.metals.gold.price}`, data.metals.gold.change, data.metals.gold.unit)}
-            {renderRow(<Sparkles className="text-gray-300" size={16} />, "Silver", `₹${data.metals.silver.price}`, data.metals.silver.change, data.metals.silver.unit)}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
+            {renderRow(<Sparkles className="text-yellow-400" size={20} />, "Gold (24K)", `₹${data.metals.gold.price}`, data.metals.gold.change, data.metals.gold.unit)}
+            {renderRow(<Sparkles className="text-gray-300" size={20} />, "Silver", `₹${data.metals.silver.price}`, data.metals.silver.change, data.metals.silver.unit)}
           </div>
         );
       case 'crypto':
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-2">
-            {renderRow(<Coins className="text-brand-warning" size={16} />, "Bitcoin", `₹${data.crypto.bitcoin.price.toLocaleString()}`, data.crypto.bitcoin.change, data.crypto.bitcoin.symbol)}
-            {renderRow(<Coins className="text-brand-info" size={16} />, "Ethereum", `₹${data.crypto.ethereum.price.toLocaleString()}`, data.crypto.ethereum.change, data.crypto.ethereum.symbol)}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
+            {renderRow(<Coins className="text-brand-warning" size={20} />, "Bitcoin", `₹${data.crypto.bitcoin.price.toLocaleString()}`, data.crypto.bitcoin.change, data.crypto.bitcoin.symbol)}
+            {renderRow(<Coins className="text-brand-info" size={20} />, "Ethereum", `₹${data.crypto.ethereum.price.toLocaleString()}`, data.crypto.ethereum.change, data.crypto.ethereum.symbol)}
           </div>
         );
       case 'markets':
         return (
-          <div className="space-y-3 p-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {renderRow(<LineChart className="text-brand-success" size={16} />, "Nifty 50", data.indianMarkets.nifty50.value, data.indianMarkets.nifty50.change, "NSE")}
-              {renderRow(<LineChart className="text-brand-success" size={16} />, "Sensex", data.indianMarkets.sensex.value, data.indianMarkets.sensex.change, "BSE")}
+          <div className="space-y-4 p-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {renderRow(<LineChart className="text-brand-success" size={20} />, "Nifty 50", data.indianMarkets.nifty50.value.toLocaleString(), data.indianMarkets.nifty50.change, "NSE")}
+              {renderRow(<LineChart className="text-brand-success" size={20} />, "Sensex", data.indianMarkets.sensex.value.toLocaleString(), data.indianMarkets.sensex.change, "BSE")}
             </div>
-            <div className="pt-2 border-t border-white/10 mt-2">
-              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1 mb-2 block">Top Gainers</span>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="pt-4 border-t border-white/10 mt-2">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1 mb-3 block">Top Gainers</span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {data.indianMarkets.topGainers?.map((g: any, i: number) => 
-                  renderRow(<TrendingUp className="text-brand-success" size={14} />, g.symbol, "", g.change)
+                  renderRow(<TrendingUp className="text-brand-success" size={20} />, g.symbol, "", g.change)
                 )}
               </div>
             </div>
@@ -139,21 +140,21 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
         );
       case 'funds':
         return (
-          <div className="space-y-3 p-2">
+          <div className="space-y-4 p-4">
             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-1 block mb-1">Trending SIPs (1Y Return)</span>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {data.mutualFunds.map((mf: any, i: number) => 
-                renderRow(<Briefcase className="text-brand-primary" size={16} />, mf.name, `${mf.returns1Y}%`, undefined, `Min SIP: ₹${mf.sipMin}`)
+                renderRow(<Briefcase className="text-brand-primary" size={20} />, mf.name, `${mf.returns1Y}%`, undefined, `Min SIP: ₹${mf.sipMin}`)
               )}
             </div>
           </div>
         );
       case 'global':
         return (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 p-2">
-            {renderRow(<Globe className="text-brand-info" size={16} />, "NASDAQ", data.international.nasdaq.value, data.international.nasdaq.change, "USA")}
-            {renderRow(<Globe className="text-brand-info" size={16} />, "S&P 500", data.international.sp500.value, data.international.sp500.change, "USA")}
-            {renderRow(<Globe className="text-brand-info" size={16} />, "Dow Jones", data.international.dowJones.value, data.international.dowJones.change, "USA")}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
+            {renderRow(<Globe className="text-brand-info" size={20} />, "NASDAQ", data.international.nasdaq.value.toLocaleString(), data.international.nasdaq.change, "USA")}
+            {renderRow(<Globe className="text-brand-info" size={20} />, "S&P 500", data.international.sp500.value.toLocaleString(), data.international.sp500.change, "USA")}
+            {renderRow(<Globe className="text-brand-info" size={20} />, "Dow Jones", data.international.dowJones.value.toLocaleString(), data.international.dowJones.change, "USA")}
           </div>
         );
     }
@@ -340,23 +341,41 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
   };
 
   return (
-    <div className={`w-full relative z-40 ${isHidden ? 'hidden' : ''}`}>
+    <div className={`w-full relative z-40 ${isHidden ? 'hidden' : ''} sticky top-0 md:top-4 lg:top-0 shadow-lg rounded-xl overflow-visible`}>
+      <style>{`
+        @keyframes ticker {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .ticker-content {
+          animation: ticker 30s linear infinite;
+          display: flex;
+          white-space: nowrap;
+        }
+        .ticker-content:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
       {/* Ticker Bar (Always Visible & Sticky) */}
       {!selectedAsset && (
-        <div className="h-12 w-full bg-[#1a1400] flex items-center justify-between overflow-hidden shadow-lg border-y border-[#d4af37] relative">
+        <div className="h-12 w-full bg-gradient-to-r from-[#1a1a2e] to-[#16213e] flex items-center justify-between overflow-hidden shadow-lg border border-white/10 rounded-xl relative z-40">
           
           {/* Left Side: Indicator */}
-          <div className="flex-shrink-0 h-full flex items-center px-4 bg-[#1a1400] z-10 border-r border-[#d4af37] shadow-[4px_0_15px_rgba(10,8,0,1)]">
+          <div className="flex-shrink-0 h-full flex items-center px-4 bg-[#1a1a2e] z-10 border-r border-white/10 shadow-[4px_0_15px_rgba(26,26,46,0.9)]">
             <span className="relative flex h-2.5 w-2.5 mr-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ef4444] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ef4444]"></span>
             </span>
-            <span className="text-xs font-black text-[#d4af37] uppercase tracking-widest hidden sm:block">Live Markets</span>
-            <span className="text-xs font-black text-[#d4af37] uppercase tracking-widest sm:hidden">Live</span>
+            <span className="text-xs font-bold text-white uppercase tracking-widest hidden sm:block">Live Markets</span>
+            <span className="text-xs font-bold text-white uppercase tracking-widest sm:hidden">Live</span>
           </div>
 
           {/* Middle: Scrolling Ticker */}
-          <div className="flex-1 overflow-hidden h-full flex items-center relative mask-image-edges">
+          <div className="flex-1 overflow-hidden h-full flex items-center relative">
+            <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#1a1a2e] to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#16213e] to-transparent z-10 pointer-events-none" />
+            
             <div className="ticker-content flex items-center h-full">
               {marqueeItems.map((item, idx) => (
                 item.id === 'loading' ? (
@@ -369,8 +388,8 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
                     onClick={() => setSelectedAsset(item)}
                     className="flex items-center mx-6 text-sm whitespace-nowrap hover:bg-white/5 px-2 py-1 rounded-md transition-colors group cursor-pointer"
                   >
-                    <span className="text-[#8a7a40] font-semibold mr-2 group-hover:text-[#d4af37] transition-colors">{item.label}</span>
-                    <span className="text-[#d4af37] font-bold">{item.value}</span>
+                    <span className="text-white font-semibold mr-2">{item.label}</span>
+                    <span className="text-gray-300 font-bold">{item.value}</span>
                     {item.value && renderChange(item.change, 'sm')}
                     <span className="text-white/20 ml-6 hidden group-hover:inline-block opacity-0 group-hover:opacity-100 transition-opacity">|</span>
                     <span className="text-white/20 ml-6 group-hover:hidden transition-opacity">|</span>
@@ -382,20 +401,20 @@ export const MarketTrends = ({ isHidden = false }: MarketTrendsProps) => {
 
           {/* Right Side: Button */}
           <div 
-            className="flex-shrink-0 h-full flex items-center px-4 bg-[#16213e] z-10 border-l border-white/5 cursor-pointer hover:bg-white/5 transition group shadow-[-4px_0_15px_rgba(22,33,62,1)]"
+            className="flex-shrink-0 h-full flex items-center px-4 bg-[#16213e] z-10 border-l border-white/10 cursor-pointer hover:bg-white/5 transition group shadow-[-4px_0_15px_rgba(22,33,62,0.9)]"
             onClick={() => setIsExpanded(!isExpanded)}
           >
-            <span className="text-xs font-bold text-gray-300 group-hover:text-white transition hidden sm:block mr-1">
+            <span className="text-xs font-bold text-white transition hidden sm:block mr-1">
               {isExpanded ? 'Close Details' : 'View Details'}
             </span>
-            {isExpanded ? <X size={16} className="text-gray-400 group-hover:text-white" /> : <ChevronRight size={16} className="text-gray-400 group-hover:text-white" />}
+            {isExpanded ? <X size={16} className="text-white" /> : <ChevronRight size={16} className="text-white" />}
           </div>
         </div>
       )}
 
       {/* Expanded Panel (Absolute dropdown overlay) */}
       {isExpanded && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-[#0b0e26]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="absolute top-14 left-0 right-0 bg-[#0b0e26]/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-40 animate-in fade-in slide-in-from-top-2 duration-300">
           
           <div className="p-4 flex items-center justify-between border-b border-white/5 bg-white/5">
             <h3 className="text-sm font-bold text-white flex items-center">
